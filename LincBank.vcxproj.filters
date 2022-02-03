@@ -18,5 +18,34 @@
     <ClCompile Include="LinkBank.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="savings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="current.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="historyinfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="account.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="current.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interestearning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="savings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transaction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="historyinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

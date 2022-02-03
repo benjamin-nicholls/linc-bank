@@ -18,12 +18,28 @@ Good luck!
 #include <sstream>
 #include <vector>
 
+// Shows all menu options to the user.
+void printMenuOptions() {
+	std::cout << "  OPTIONS" << std::endl;
+	std::cout << "    open type initial_deposit" << "\t" << "open a current(1), savings(2) or ISA(3) account" << std::endl;
+	std::cout << "    view[index]" << "\t\t\t" << "view balance and recent transactions" << std::endl;
+	std::cout << "    withdraw sum" << "\t\t" << "withdraw funds from most recently viewed account" << std::endl;
+	std::cout << "    deposit sum" << "\t\t\t" << "deposit funds into most recently viewed account" << std::endl;
+	std::cout << "    transfer src dest sum" << "\t" << "transfer funds between accounts" << std::endl;
+	std::cout << "    project years" << "\t\t" << "project balance forward in time" << std::endl;
+	std::cout << "    exit" << "\t\t\t" << "close this application" << std::endl;
+	std::cout << "    options" << "\t\t\t" << "view these options again" << std::endl;
+}
+
 int main() {
 	std::vector <std::string> parameters;
 	std::string userCommand;
 	// you may also want to store a collection of opened accounts here
 
 	std::cout << "~~~ Welcome to LincBank! ~~~" << std::endl;
+	printMenuOptions();
+	std::cout << "Press any key to continue...";
+	std::cin.ignore();
 
 	while (userCommand != "exit") {
 		parameters.clear(); // clear ready for next command
@@ -46,6 +62,7 @@ int main() {
 
 		if (command.compare("options") == 0) {
 			// display the various commands to the user
+			printMenuOptions();
 		} else if (command.compare("open") == 0) {
 			// allow a user to open an account
 			// e.g., Account* a = new Savings(...);
@@ -73,6 +90,9 @@ int main() {
 	std::cout << "Press any key to quit...";
 	std::getchar();
 }
+
+
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

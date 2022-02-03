@@ -139,7 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="current.cpp" />
+    <ClCompile Include="historyinfo.cpp" />
     <ClCompile Include="LinkBank.cpp" />
+    <ClCompile Include="savings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="account.h" />
+    <ClInclude Include="current.h" />
+    <ClInclude Include="historyinfo.h" />
+    <ClInclude Include="interestearning.h" />
+    <ClInclude Include="savings.h" />
+    <ClInclude Include="transaction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
