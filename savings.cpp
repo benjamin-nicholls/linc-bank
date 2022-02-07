@@ -1,7 +1,23 @@
 #include "savings.h"
 
-savings::savings() {
+savings::savings(double initialDeposit = 0, bool Isa = false) {
+	if (initialDeposit < 0) { 
+		throw std::exception{"Initial deposit for a savings account cannot be negative."};
+	}
 
+	balance = initialDeposit;
+	isa = Isa;
+	std::string accountType = "Savings";
+	if (isa) {
+		if (initialDeposit < 1000) {
+			throw std::exception{ "Initial deposit for an ISA account must be at least £1000." };
+		}
+		interestRate = 0.0115;
+		accountType = "ISA";
+	}
+
+	historyinfo* hi = new historyinfo("Open" + accountType + "Account", balance);
+	history.push_back(hi);
 }
 
 savings::~savings() {
@@ -28,7 +44,18 @@ bool savings::withdraw(double amount) {
 	return true;
 }
 
+//this needs to be changed to use interestearning
+void savings::assignInterest() {
+	balance *= 1 + interestRate;
+}
+
+
+//toString
 /*
+
+
+	0.0085 
+
 
 	double interestRate;
 	bool isa;
