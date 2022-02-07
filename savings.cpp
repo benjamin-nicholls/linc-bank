@@ -1,18 +1,20 @@
 #include "savings.h"
+#include <cmath> // exponent
 
-savings::savings(double initialDeposit = 0, bool Isa = false) {
-	if (initialDeposit < 0) { 
+
+savings::savings(double InitialDeposit = 0, bool Isa = false) {
+	if (InitialDeposit < 0) {
 		throw std::exception{"Initial deposit for a savings account cannot be negative."};
 	}
 
-	balance = initialDeposit;
+	balance = InitialDeposit;
 	isa = Isa;
 	std::string accountType = "Savings";
 	if (isa) {
-		if (initialDeposit < 1000) {
+		if (InitialDeposit < 1000) {
 			throw std::exception{ "Initial deposit for an ISA account must be at least £1000." };
 		}
-		interestRate = 0.0115;
+		interestRate = 1.15;
 		accountType = "ISA";
 	}
 
@@ -24,31 +26,33 @@ savings::~savings() {
 
 }
 
-bool savings::deposit(double amount) {
-	if (amount <= 0) { return false; }
-	balance += amount;
-	historyinfo* hi = new historyinfo("Deposit", amount);
+bool savings::deposit(double Amount) {
+	if (Amount <= 0) { return false; }
+	balance += Amount;
+	historyinfo* hi = new historyinfo("Deposit", Amount);
 	history.push_back(hi);
 	return true;
 }
 
 
-bool savings::withdraw(double amount) {
-	if (amount <= 0) { return false; }
-	if (balance - amount < 0) { return false; }
+bool savings::withdraw(double Amount) {
+	if (Amount <= 0) { return false; }
+	if (balance - Amount < 0) { return false; }
 
-	balance -= amount;
+	balance -= Amount;
 
-	historyinfo* hi = new historyinfo("Withdraw", amount);
+	historyinfo* hi = new historyinfo("Withdraw", Amount);
 	history.push_back(hi);
 	return true;
 }
 
-//this needs to be changed to use interestearning
-void savings::assignInterest() {
-	balance *= 1 + interestRate;
-}
 
+double savings::computeInterest(double InitialBalance, int Years) {
+	// Compound interest equation.
+	// A = P(1+(r/n))^nt
+	// A = final amount, P = intial balance, r = interest rate decimal, t = time period, n = applied per unit time (monthly).
+	return InitialBalance * pow(1 + interestRate / 12, 12 * Years);
+}
 
 //toString
 /*
