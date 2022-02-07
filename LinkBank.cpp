@@ -17,6 +17,7 @@ Good luck!
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <string>
 
 // Shows all menu options to the user.
 void printMenuOptions() {
@@ -58,7 +59,10 @@ int main() {
 		}
 
 		// Define all commands as per the brief
-		std::string command = parameters[0];
+		std::string command = "";
+		if (!command.empty()) {
+			std::string command = parameters[0];
+		}
 
 		if (command.compare("options") == 0) {
 			// display the various commands to the user

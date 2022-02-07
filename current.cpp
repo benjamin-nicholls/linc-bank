@@ -1,9 +1,10 @@
 #include "current.h"
-#include "historyinfo.cpp"
+//#include "historyinfo.cpp"
 
 
 current::current() {
 	balance = 0;
+	overdraft = 0;
 	historyinfo *hi = new historyinfo("Open account", balance);
 	history.push_back(hi);
 	//delete hi; //will this delete the data or just the pointer?
@@ -12,6 +13,7 @@ current::current() {
 
 current::current(double initialDeposit) {
 	balance = initialDeposit;
+	overdraft = 0;
 	historyinfo* hi = new historyinfo("Open account", balance);
 	history.push_back(hi);
 }
@@ -52,5 +54,5 @@ bool current::withdraw(double amount) {
 
 
 std::string current::toString() {
-
+	return "";
 }

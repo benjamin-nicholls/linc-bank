@@ -4,14 +4,15 @@
 
 class historyinfo {
 
-private:
-	std::string type;
-	double value;
+	private:
+		std::string type;
+		double value;
 
-public:
-	historyinfo();
-	historyinfo(std::string type, double value);
-	std::string getType();
-	double getValue();
+	public:
+		historyinfo();
+		historyinfo(std::string type, double value);
+		~historyinfo();
+		std::string getType();
+		double getValue();
 
 };

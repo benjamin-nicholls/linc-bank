@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "historyinfo.cpp"
+#include "historyinfo.h"
 
 
 class account {

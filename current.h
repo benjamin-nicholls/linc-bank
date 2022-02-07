@@ -5,9 +5,10 @@
 class current : public account {
 
 public:
-	current() {}
-	current(double initialDeposit) {}
-	~current() {}
+	current();
+
+	current(double initialDeposit);
+	~current();
 
 protected:
 	double overdraft;
