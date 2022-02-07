@@ -5,16 +5,19 @@
 current::current() {
 	balance = 0;
 	overdraft = 0;
-	historyinfo *hi = new historyinfo("Open account", balance);
+	historyinfo *hi = new historyinfo("Open Current Account", balance);
 	history.push_back(hi);
 	//delete hi; //will this delete the data or just the pointer?
 }
 
 
 current::current(double initialDeposit) {
+	if (initialDeposit < 0) {
+		throw std::exception{ "Initial deposit for a current account cannot be negative." };
+	}
 	balance = initialDeposit;
 	overdraft = 0;
-	historyinfo* hi = new historyinfo("Open account", balance);
+	historyinfo* hi = new historyinfo("Open Current Account", balance);
 	history.push_back(hi);
 }
 
