@@ -11,10 +11,11 @@ public:
 	~savings();
 
 protected:
-	double interestRate = 0.0085;
+	double interestRate = 0.85;
 	bool isa;
 	bool deposit(double amount);
 	bool withdraw(double amount);
 	void assignInterest();
+	double computeInterest(double InitialBalance, int Years);
 	
 };
