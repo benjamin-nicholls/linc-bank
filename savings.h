@@ -6,13 +6,15 @@
 class savings: public account, public interestearning {
 
 public:
-	savings();
+	//savings();
+	savings(double initialDeposit, bool Isa);
 	~savings();
 
 protected:
-	double interestRate = 0.85;
+	double interestRate = 0.0085;
 	bool isa;
 	bool deposit(double amount);
 	bool withdraw(double amount);
+	void assignInterest();
 	
 };
