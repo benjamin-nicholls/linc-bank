@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# cmake folder
+build/
+
+# vs json files
+*.json
+
+# mac files
+.DS_Store
+
