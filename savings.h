@@ -3,19 +3,18 @@
 #include "interestearning.h"
 
 
-class savings: public account, public interestearning {
+class Savings: public Account, public InterestEarning {
 
 public:
-	//savings();
-	savings(double initialDeposit, bool Isa);
-	~savings();
+	Savings(double InitialDeposit = 0, bool Isa = false);
+	~Savings();
 
 protected:
-	double interestRate = 0.85;
-	bool isa;
-	bool deposit(double amount);
-	bool withdraw(double amount);
-	void assignInterest();
-	double computeInterest(double InitialBalance, int Years);
+	double m_InterestRate = 0.85;
+	bool m_ISA;
+	bool Deposit(double Amount);
+	bool Withdraw(double Amount);
+	void AssignInterest();
+	double ComputeInterest(double InitialBalance, int Years);
 	
 };

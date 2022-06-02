@@ -1,9 +1,9 @@
 #pragma once
 
 
-class interestearning {
+class InterestEarning {
 
 protected:
-	virtual double computeInterest(double InitialBalance, int Years) = 0;
+	virtual double ComputeInterest(double InitialBalance, int Years) = 0;
 
 };

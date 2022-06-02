@@ -2,12 +2,12 @@
 #include <string>
 
 
-class transaction {
+class Transaction {
 
 protected:
-	std::string desc;
-	std::string timestamp;
-	double value;
-	std::string toString();
+	std::string m_Desc;
+	std::string m_Timestamp;
+	double m_Value;
+	std::string ToString();
 
 };

@@ -2,17 +2,16 @@
 #include <string>
 
 
-class historyinfo {
+class HistoryInfo {
+private:
+	std::string m_Type;
+	double m_Value;
 
-	private:
-		std::string type;
-		double value;
-
-	public:
-		historyinfo();
-		historyinfo(std::string type, double value);
-		~historyinfo();
-		std::string getType();
-		double getValue();
+public:
+	HistoryInfo();
+	HistoryInfo(std::string Type, double Value);
+	~HistoryInfo();
+	std::string GetType();
+	double GetValue();
 
 };

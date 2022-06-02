@@ -4,18 +4,19 @@
 #include "historyinfo.h"
 
 
-class account {
+class Account {
 
 public:
-	virtual ~account() {}
+	Account() {}
+	~Account() {}
 
 protected:
-	double balance;
-	std::vector<historyinfo *>history;
-	double overdraftLimit = 500.00;
+	double m_Balance;
+	std::vector<HistoryInfo*> m_History;
+	double m_OverdraftLimit = 0;
 
-	virtual bool deposit() = 0;
-	virtual bool withdraw() = 0;
-	bool toString();
+	virtual bool Deposit(double Amount) = 0;
+	virtual bool Withdraw(double Amount) = 0;
+	std::string ToString();
 
 };

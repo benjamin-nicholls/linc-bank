@@ -1,57 +1,62 @@
 #include "savings.h"
-#include <cmath> // exponent
+#include <cmath>  // Exponent.
 
 
-savings::savings(double InitialDeposit = 0, bool Isa = false) {
+Savings::Savings(double InitialDeposit, bool Isa) {
 	if (InitialDeposit < 0) {
-		throw std::exception{"Initial deposit for a savings account cannot be negative."};
+		//throw std::exception{"Initial deposit for a savings account cannot be negative."};
+		throw "Initial deposit for a savings account cannot be negative.";
 	}
 
-	balance = InitialDeposit;
-	isa = Isa;
+	m_Balance = InitialDeposit;
+	m_ISA = Isa;
 	std::string accountType = "Savings";
-	if (isa) {
+	if (m_ISA) {
 		if (InitialDeposit < 1000) {
-			throw std::exception{ "Initial deposit for an ISA account must be at least £1000." };
+			//throw std::exception& e("Initial deposit for an ISA account must be at least ï¿½1000.");
+			throw "Initial deposit for an ISA account must be at least Â£1000.";
 		}
-		interestRate = 1.15;
+		m_InterestRate = 1.15;
 		accountType = "ISA";
 	}
 
-	historyinfo* hi = new historyinfo("Open" + accountType + "Account", balance);
-	history.push_back(hi);
+	HistoryInfo* hi = new HistoryInfo("Open" + accountType + "Account", m_Balance);
+	m_History.push_back(hi);
+	delete hi;
+}	
+
+Savings::~Savings() {
+
 }
 
-savings::~savings() {
-
-}
-
-bool savings::deposit(double Amount) {
+bool Savings::Deposit(double Amount) {
 	if (Amount <= 0) { return false; }
-	balance += Amount;
-	historyinfo* hi = new historyinfo("Deposit", Amount);
-	history.push_back(hi);
+	m_Balance += Amount;
+	HistoryInfo* hi = new HistoryInfo("Deposit", Amount);
+	m_History.push_back(hi);
+	delete hi;
 	return true;
 }
 
 
-bool savings::withdraw(double Amount) {
+bool Savings::Withdraw(double Amount) {
 	if (Amount <= 0) { return false; }
-	if (balance - Amount < 0) { return false; }
+	if (m_Balance - Amount < 0) { return false; }
 
-	balance -= Amount;
+	m_Balance -= Amount;
 
-	historyinfo* hi = new historyinfo("Withdraw", Amount);
-	history.push_back(hi);
+	HistoryInfo* hi = new HistoryInfo("Withdraw", Amount);
+	m_History.push_back(hi);
+	delete hi;
 	return true;
 }
 
 
-double savings::computeInterest(double InitialBalance, int Years) {
+double Savings::ComputeInterest(double InitialBalance, int Years) {
 	// Compound interest equation.
 	// A = P(1+(r/n))^nt
 	// A = final amount, P = intial balance, r = interest rate decimal, t = time period, n = applied per unit time (monthly).
-	return InitialBalance * pow(1 + interestRate / 12, 12 * Years);
+	return InitialBalance * pow(1 + m_InterestRate / 12, 12 * Years);
 }
 
 //toString

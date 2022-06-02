@@ -1,28 +1,28 @@
 #include "historyinfo.h"
 
 
-historyinfo::historyinfo() {
-	type = "";
-	value = NULL;
+HistoryInfo::HistoryInfo() {
+	m_Type = "";
+	m_Value = 0;
 }
 
 
-historyinfo::historyinfo(std::string Type, double Value) {
-	type = Type;
-	value = Value;
+HistoryInfo::HistoryInfo(std::string Type, double Value) {
+	m_Type = Type;
+	m_Value = Value;
 
 }
 
 
-historyinfo::~historyinfo() {
+HistoryInfo::~HistoryInfo() {
 }
 
 
-std::string historyinfo::getType() {
-	return type;
+std::string HistoryInfo::GetType() {
+	return m_Type;
 }
 
 
-double historyinfo::getValue() {
-	return value;
+double HistoryInfo::GetValue() {
+	return m_Value;
 }

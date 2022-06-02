@@ -2,18 +2,18 @@
 #include "account.h"
 
 
-class current : public account {
+class Current : public Account {
 
 public:
-	current();
-
-	current(double initialDeposit);
-	~current();
+	Current();
+	Current(double InitialDeposit);
+	~Current();
 
 protected:
-	double overdraft;
-	bool deposit(double amount);
-	bool withdraw(double amount);
-	std::string toString();
+	double m_OverdraftLimit = 500.00;
+	double m_Overdraft;
+	bool Deposit(double Amount);
+	bool Withdraw(double Amount);
+	std::string ToString();
 
 };

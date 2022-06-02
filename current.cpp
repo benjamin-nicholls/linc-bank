@@ -1,65 +1,65 @@
 #include "current.h"
-//#include "historyinfo.cpp"
 
 
-current::current() {
-	balance = 0;
-	overdraft = 0;
-	historyinfo *hi = new historyinfo("Open Current Account", balance);
-	history.push_back(hi);
+Current::Current() {
+	m_Balance = 0;
+	m_Overdraft = 0;
+	HistoryInfo* hi = new HistoryInfo("Open Current Account", m_Balance);
+	m_History.push_back(hi);
 	//delete hi; //will this delete the data or just the pointer?
 }
 
 
-current::current(double initialDeposit) {
-	if (initialDeposit < 0) {
-		throw std::exception{ "Initial deposit for a current account cannot be negative." };
+Current::Current(double InitialDeposit) {
+	if (InitialDeposit < 0) {
+		//throw std::exception{ "Initial deposit for a current account cannot be negative." };
+		throw "Initial deposit for a current account cannot be negative.";
 	}
-	balance = initialDeposit;
-	overdraft = 0;
-	historyinfo* hi = new historyinfo("Open Current Account", balance);
-	history.push_back(hi);
+	m_Balance = InitialDeposit;
+	m_Overdraft = 0;
+	HistoryInfo* hi = new HistoryInfo("Open Current Account", m_Balance);
+	m_History.push_back(hi);
 }
 
 
-current::~current() {
+Current::~Current() {
 }
 
 
-bool current::deposit(double amount) {
-	if (amount <= 0) { return false; }
+bool Current::Deposit(double Amount) {
+	if (Amount <= 0) { return false; }
 
-	double a = amount - overdraft;
+	double a = Amount - m_Overdraft;
 	if (a > 0) {
-		overdraft = 0;
-		balance += a;
+		m_Overdraft = 0;
+		m_Balance += a;
 	} else {
-		overdraft = -a;
+		m_Overdraft = -a;
 	}
 
-	historyinfo* hi = new historyinfo("Deposit", amount);
-	history.push_back(hi);
+	HistoryInfo* hi = new HistoryInfo("Deposit", Amount);
+	m_History.push_back(hi);
 	return true;
 
 }
 
 
-bool current::withdraw(double amount) {
-	if (amount <= 0) { return false; }
-	if (balance + overdraftLimit - overdraft <= amount) { return false; }
+bool Current::Withdraw(double Amount) {
+	if (Amount <= 0) { return false; }
+	if (m_Balance + m_OverdraftLimit - m_Overdraft <= Amount) { return false; }
 
-	balance -= amount;
-	if (balance < 0) {
-		overdraft = -balance;
-		balance = 0;
+	m_Balance -= Amount;
+	if (m_Balance < 0) {
+		m_Overdraft = -m_Balance;
+		m_Balance = 0;
 	}
 
-	historyinfo* hi = new historyinfo("Withdraw", amount);
-	history.push_back(hi);
+	HistoryInfo* hi = new HistoryInfo("Withdraw", Amount);
+	m_History.push_back(hi);
 	return true;
 }
 
 
-std::string current::toString() {
+std::string Current::ToString() {
 	return "";
 }
