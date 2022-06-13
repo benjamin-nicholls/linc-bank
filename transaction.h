@@ -2,6 +2,7 @@
 #include <string>
 #include <chrono>
 
+
 class Transaction {
 private:
 	std::string m_Currency;
