@@ -38,11 +38,15 @@ bool Current::Deposit(double Amount) {
 bool Current::Withdraw(double Amount) {
 	if (Amount <= 0.00) { return false; }
 	if (m_Balance + m_OverdraftLimit - m_Overdraft <= Amount) { return false; }
-
-	m_Balance -= Amount;
-	if (m_Balance < 0.00) {
-		m_Overdraft = -m_Balance;
-		m_Balance = 0.00;
+	
+	if (m_Balance == 0) {
+		m_Overdraft -= Amount;
+	} else {
+		m_Balance -= Amount;
+		if (m_Balance < 0.00) {
+			m_Overdraft = -m_Balance;
+			m_Balance = 0.00;
+		}
 	}
 
 	Transaction* t = new Transaction("Withdraw", Amount);
@@ -68,7 +72,7 @@ std::string Current::ToString() {
 
 	a += "Current account | Balance: £" + Current::Truncate2dp(this->GetBalance()) + "\n";
 	for (auto entry : m_History) {
-		a += entry->ToString() + "\n";
+		a += entry->ToString();
     }
 	return a;                                                           
 }
