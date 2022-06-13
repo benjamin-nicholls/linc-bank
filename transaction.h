@@ -1,13 +1,17 @@
 #pragma once
 #include <string>
-
+#include <chrono>
 
 class Transaction {
-
-protected:
-	std::string m_Desc;
-	std::string m_Timestamp;
+private:
+	std::string m_Currency;
+	std::string m_Type;
 	double m_Value;
-	std::string ToString();
+	std::time_t m_Time;
+	std::string Truncate2dp(double Value);
 
+public:
+	Transaction(std::string Type, double Value);
+	~Transaction();
+	std::string ToString();
 };
