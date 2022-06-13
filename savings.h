@@ -6,8 +6,9 @@
 class Savings: public Account, public InterestEarning {
 
 public:
-	Savings(double InitialDeposit = 0, bool Isa = false);
+	Savings(double InitialDeposit = 0.00, bool Isa = false);
 	~Savings();
+	std::string ToString();
 
 protected:
 	double m_InterestRate = 0.85;
@@ -16,5 +17,7 @@ protected:
 	bool Withdraw(double Amount);
 	void AssignInterest();
 	double ComputeInterest(double InitialBalance, int Years);
+	double GetBalance();
+	std::string Truncate2dp(double Value);
 	
 };
