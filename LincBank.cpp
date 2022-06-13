@@ -22,7 +22,14 @@ Good luck!
 #include "current.h"
 #include "savings.h"
 
-#include <typeinfo>  // Remove later.
+
+// Both for setprecision.
+#include <iomanip>
+#include <limits>
+
+// to do
+// add in consts wherever possible
+
 
 // Shows all menu options to the user.
 void printMenuOptions() {
@@ -48,22 +55,17 @@ int main() {
 	printMenuOptions();
 	std::cout << "Press any key to continue...";
 	std::cin.ignore();
-
+ 
 	int count = 0;
 	while (userCommand != "exit") {
 		count++;
-		for (auto const thing : parameters) {
-			std::cout << thing << std::endl;
-		}
+
 		parameters.clear();  // Clear ready for next command.  
-		std::cout << "params after clear" << std::endl;
-		for (auto const thing : parameters) {
-			std::cout << thing << std::endl;
-		}
+
 		std::cout << std::endl << ">>> ";
 
 		std::getline(std::cin, userCommand);
-		std::cout << "user command: " << userCommand << std::endl;
+		
 		char* p_cstr = new char[userCommand.length() + 1];
 		strcpy(p_cstr, userCommand.c_str());
 
@@ -77,12 +79,7 @@ int main() {
 		
 		// Define all commands as per the brief.  
 		std::string command = parameters[0];
-		std::cout << "count " << count << std::endl;
-		std::cout << "check params" << std::endl;
-		for (auto const thing : parameters) {
-			
-			std::cout << thing << std::endl;
-		}
+
 		if (!command.empty()) {
 			std::string command = " ";
 		}
@@ -91,11 +88,6 @@ int main() {
 			// Display the various commands to the user.  
 			printMenuOptions();
 		} else if (command.compare("open") == 0) {
-			std::cout << "start" << std::endl;
-			for (auto const thing : command) {
-				
-				std::cout << thing << std::endl;
-			}
 			
 
 			// Allow a user to open an account.  
@@ -103,7 +95,7 @@ int main() {
 			bool flag = false;
 			double deposit = stod(parameters[2]);
 			std::string accountType = "";
-			std::cout << "parameters[1] is " << parameters[1] << std::endl;
+
 			if (parameters[1] == "1") {
 				// do check here
 				accountType = "Current";
@@ -126,15 +118,26 @@ int main() {
 			}
 			if (flag) {
 				numberOfAccounts++;
-				for (auto const thing : parameters) {
-					std::cout << thing << std::endl;
-				}
-				std::cout << "number of accounts " << numberOfAccounts << std::endl;
 				std::cout << accountType << " Account number '" << accounts.size() << "' created." << std::endl;
 			}
 		} else if (command.compare("view") == 0) {
 			// Display an account according to an index (starting from 1).  
-			// Alternatively, display all accounts if no index is provided.  
+			// Alternatively, display all accounts if no index is provided.
+			if (parameters.size() == 1) {
+				for (auto a : accounts) {
+					std::cout << a->ToString() << std::endl;
+				}
+			} else {
+				try {
+					int index = stod(parameters[1]);
+					Account* a = accounts[index-1];
+					std::cout << a->ToString() << std::endl;
+				} catch (const std::out_of_range& e) {
+					std::cout << "ERROR: Is your index valid?" << std::endl;
+				}
+			}
+			
+
 		} else if (command.compare("withdraw") == 0) {
 			// Allow user to withdraw funds from an account.  
 		} else if (command.compare("deposit") == 0) {
