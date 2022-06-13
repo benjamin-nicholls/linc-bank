@@ -20,9 +20,8 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 		accountType = "ISA";
 	}
 
-	HistoryInfo* hi = new HistoryInfo("Open" + accountType + "Account", m_Balance);
+	HistoryInfo* hi = new HistoryInfo("Open " + accountType + " Account", m_Balance);
 	m_History.push_back(hi);
-	delete hi;
 }	
 
 Savings::~Savings() {
@@ -34,20 +33,18 @@ bool Savings::Deposit(double Amount) {
 	m_Balance += Amount;
 	HistoryInfo* hi = new HistoryInfo("Deposit", Amount);
 	m_History.push_back(hi);
-	delete hi;
 	return true;
 }
 
 
 bool Savings::Withdraw(double Amount) {
-	if (Amount <= 0) { return false; }
-	if (m_Balance - Amount < 0) { return false; }
+	if (Amount <= 0.00) { return false; }
+	if (m_Balance - Amount < 0.00) { return false; }
 
 	m_Balance -= Amount;
 
 	HistoryInfo* hi = new HistoryInfo("Withdraw", Amount);
 	m_History.push_back(hi);
-	delete hi;
 	return true;
 }
 
@@ -57,6 +54,23 @@ double Savings::ComputeInterest(double InitialBalance, int Years) {
 	// A = P(1+(r/n))^nt
 	// A = final amount, P = intial balance, r = interest rate decimal, t = time period, n = applied per unit time (monthly).
 	return InitialBalance * pow(1 + m_InterestRate / 12, 12 * Years);
+}
+
+std::string Savings::Truncate2dp(double Value) {
+	std::string value = std::to_string(Value);
+	value = value.substr(0, value.find('.')  + 3);
+	return value;
+}
+
+
+std::string Savings::ToString() {
+	std::string a = "";
+
+	a += "Savings account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
+	for (auto entry : m_History) {
+		a += entry->ToString() + "\n";
+    }
+	return a;   
 }
 
 //toString
