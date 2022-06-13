@@ -1,15 +1,6 @@
 #include "current.h"
 
 
-Current::Current() {
-	m_Balance = 0.00;
-	m_Overdraft = 0.00;
-	Transaction* t = new Transaction("Open Current Account", m_Balance);
-	m_History.push_back(t);
-	//delete hi; //will this delete the data or just the pointer?
-}
-
-
 Current::Current(double InitialDeposit) {
 	if (InitialDeposit < 0.00) {
 		//throw std::exception{ "Initial deposit for a current account cannot be negative." };
