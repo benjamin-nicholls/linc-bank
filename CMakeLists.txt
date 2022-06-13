@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 add_definitions(-std=c++11)
 
@@ -14,4 +14,4 @@ project(test)
 #add_executable (savings savings.cpp)
 #add_executable (current current.cpp)
 
-add_executable (test LincBank.cpp historyinfo.cpp savings.cpp current.cpp)
+add_executable (test LincBank.cpp transaction.cpp savings.cpp current.cpp)
