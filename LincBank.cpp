@@ -27,7 +27,7 @@ Good luck!
 #include <iomanip>
 #include <limits>
 
-// to do
+// to do todo blank check
 // add in consts wherever possible
 
 
@@ -50,6 +50,8 @@ int main() {
 	// You may also want to store a collection of opened accounts here.  
 	std::vector<Account*> accounts;  // Store pointers.
 	int numberOfAccounts = 0;
+	bool currentAccount = false;
+	int activeAccount = 0;
 
 	std::cout << "~~~ Welcome to LincBank! ~~~" << std::endl;
 	printMenuOptions();
@@ -87,9 +89,8 @@ int main() {
 		if (command.compare("options") == 0) {
 			// Display the various commands to the user.  
 			printMenuOptions();
-		} else if (command.compare("open") == 0) {
-			
 
+		} else if (command.compare("open") == 0) {
 			// Allow a user to open an account.  
 			// e.g., Account* a = new Savings(...);
 			bool flag = false;
@@ -98,13 +99,15 @@ int main() {
 
 			if (parameters[1] == "1") {
 				// do check here
+				if (currentAccount) { std::cout << "You may only open one current account." << std::endl; continue; }
 				accountType = "Current";
 				Account* a = new Current(deposit);
 				accounts.push_back(a);
+				currentAccount = true;
 				flag = true;
 			} else if (parameters[1] == "2") {
 				accountType = "Savings";
-				Account* a = new Savings(deposit, false);
+				Account* a = new Savings(deposit);
 				accounts.push_back(a);
 				flag = true;
 			} else if (parameters[1] == "3") {
@@ -118,8 +121,10 @@ int main() {
 			}
 			if (flag) {
 				numberOfAccounts++;
+				activeAccount = numberOfAccounts - 1;
 				std::cout << accountType << " Account number '" << accounts.size() << "' created." << std::endl;
 			}
+
 		} else if (command.compare("view") == 0) {
 			// Display an account according to an index (starting from 1).  
 			// Alternatively, display all accounts if no index is provided.
@@ -130,31 +135,67 @@ int main() {
 			} else {
 				try {
 					int index = stod(parameters[1]);
-					Account* a = accounts[index-1];
+					Account* a = accounts[index - 1];
+					activeAccount = index - 1;
 					std::cout << a->ToString() << std::endl;
 				} catch (const std::out_of_range& e) {
 					std::cout << "ERROR: Is your index valid?" << std::endl;
 				}
 			}
-			
 
 		} else if (command.compare("withdraw") == 0) {
-			// Allow user to withdraw funds from an account.  
+			// Allow user to withdraw funds from an account.
+			Account* a = accounts[activeAccount];
+			double value = stod(parameters[1]);
+
+			bool flag = a->Withdraw(value);
+			if (!flag) {
+				std::cout << "Could NOT withdraw £" << value << " from account " << activeAccount + 1<< "." << std::endl;
+			} else {
+				std::cout << "Withdrawn £" << value << " from account " << activeAccount + 1 << "." << std::endl;
+				std::cout << a->ToString() << std::endl;
+			}
+			
 		} else if (command.compare("deposit") == 0) {
 			// Allow user to deposit funds into an account.  
+			Account* a = accounts[activeAccount];
+			double value = stod(parameters[1]);
+
+			bool flag = a->Deposit(value);
+			if (!flag) {
+				std::cout << "Could NOT deposit £" << value << " into account " << activeAccount + 1<< "." << std::endl;
+			} else {
+				std::cout << "Deposited £" << value << " into account " << activeAccount + 1 << "." << std::endl;
+				std::cout << a->ToString() << std::endl;
+			}
+			
 		} else if (command.compare("transfer") == 0) {
 			// Allow user to transfer funds between accounts.  
 			// i.e., a withdrawal followed by a deposit!
+			Account* a = accounts[stod(parameters[1]) - 1];
+			Account* b = accounts[stod(parameters[2]) - 1];
+			double value = stod(parameters[3]);
+
+			bool flag = a->Withdraw(value);
+			if (!flag) {
+				std::cout << "Could NOT withdraw £" << value << " from account " << activeAccount + 1 << "." << std::endl;
+			} else {
+				b->Deposit(value);
+				std::cout << "Transfered £" << value << " from account " << parameters[1]
+					<< " to account " << parameters[2] << "." << std::endl;
+				std::cout << a->ToString() << std::endl;
+				std::cout << b->ToString() << std::endl;
+			}
 		} else if (command.compare("project") == 0) {
 			// Compute compound interest t years into the future.  
-		}
-		//else if (command.compare("search"))
+			
+		} else if (command.compare("search"))
 		//{
 		//	Allow users to search their account history for a transaction.  
 		//  (this is a stretch task)
 		//}
 	}
-	// Don't have to delete accounts as program will terminate anyway.
+	// Don't have to delete accounts as program will terminate anyway. -- this is my comment, make sure this is true to do todo blank check
 	std::cout << "Press any key to quit...";
 	std::getchar();
 }
