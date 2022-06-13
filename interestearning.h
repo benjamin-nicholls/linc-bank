@@ -2,8 +2,7 @@
 
 
 class InterestEarning {
-
-protected:
+public:
 	virtual double ComputeInterest(double InitialBalance, int Years) = 0;
 
 };
