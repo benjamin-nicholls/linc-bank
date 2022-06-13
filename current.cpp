@@ -4,8 +4,8 @@
 Current::Current() {
 	m_Balance = 0.00;
 	m_Overdraft = 0.00;
-	HistoryInfo* hi = new HistoryInfo("Open Current Account", m_Balance);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Open Current Account", m_Balance);
+	m_History.push_back(t);
 	//delete hi; //will this delete the data or just the pointer?
 }
 
@@ -17,8 +17,8 @@ Current::Current(double InitialDeposit) {
 	}
 	m_Balance = InitialDeposit;
 	m_Overdraft = 0.00;
-	HistoryInfo* hi = new HistoryInfo("Open Current Acount", m_Balance);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Open Current Acount", m_Balance);
+	m_History.push_back(t);
 }
 
 
@@ -37,8 +37,8 @@ bool Current::Deposit(double Amount) {
 		m_Overdraft = -a;
 	}
 
-	HistoryInfo* hi = new HistoryInfo("Deposit", Amount);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Deposit", Amount);
+	m_History.push_back(t);
 	return true;
 
 }
@@ -54,8 +54,8 @@ bool Current::Withdraw(double Amount) {
 		m_Balance = 0.00;
 	}
 
-	HistoryInfo* hi = new HistoryInfo("Withdraw", Amount);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Withdraw", Amount);
+	m_History.push_back(t);
 	return true;
 }
 

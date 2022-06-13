@@ -20,8 +20,8 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 		accountType = "ISA";
 	}
 
-	HistoryInfo* hi = new HistoryInfo("Open " + accountType + " Account", m_Balance);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Open " + accountType + " Account", m_Balance);
+	m_History.push_back(t);
 }	
 
 Savings::~Savings() {
@@ -31,8 +31,8 @@ Savings::~Savings() {
 bool Savings::Deposit(double Amount) {
 	if (Amount <= 0) { return false; }
 	m_Balance += Amount;
-	HistoryInfo* hi = new HistoryInfo("Deposit", Amount);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Deposit", Amount);
+	m_History.push_back(t);
 	return true;
 }
 
@@ -43,8 +43,8 @@ bool Savings::Withdraw(double Amount) {
 
 	m_Balance -= Amount;
 
-	HistoryInfo* hi = new HistoryInfo("Withdraw", Amount);
-	m_History.push_back(hi);
+	Transaction* t = new Transaction("Withdraw", Amount);
+	m_History.push_back(t);
 	return true;
 }
 
