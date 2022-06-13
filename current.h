@@ -1,8 +1,8 @@
 #pragma once
 #include "account.h"
+#include "interestearning.h"
 
-
-class Current : public Account {
+class Current: public Account, public InterestEarning {
 public:
 	Current(double InitialDeposit = 0.00);
 	~Current();
