@@ -68,28 +68,7 @@ std::string Savings::ToString() {
 
 	a += "Savings account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
 	for (auto entry : m_History) {
-		a += entry->ToString() + "\n";
+		a += entry->ToString();
     }
 	return a;   
 }
-
-//toString
-/*
-
-
-	0.0085 
-
-
-	double interestRate;
-	bool isa;
-		double computeinterest();
-
-		double balance;
-	std::vector<std::string>history;
-
-	bool deposit();
-	bool withdraw();
-	bool toString();
-
-
-*/
