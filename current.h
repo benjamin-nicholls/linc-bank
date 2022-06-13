@@ -3,19 +3,16 @@
 
 
 class Current : public Account {
-
 public:
-	Current();
-	Current(double InitialDeposit);
+	Current(double InitialDeposit = 0.00);
 	~Current();
+	bool Deposit(double Amount);
+	bool Withdraw(double Amount);
 	std::string ToString();
 
 protected:
 	double m_OverdraftLimit = 500.00;
 	double m_Overdraft;
-	bool Deposit(double Amount);
-	bool Withdraw(double Amount);
 	double GetBalance();
 	std::string Truncate2dp(double Value);
-
 };
