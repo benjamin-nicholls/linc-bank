@@ -29,8 +29,8 @@ bool Savings::Deposit(double Amount, int Ref) {
 	if (Amount <= 0) { return false; }
 	m_Balance += Amount;
 	std::string desc = "Deposit";
-	if (Ref != 0) { desc = "Transfer from account " + Ref; }
-	Transaction* t = new Transaction("Deposit", Amount);
+	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
+	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
 	return true;
 }
@@ -41,7 +41,7 @@ bool Savings::Withdraw(double Amount, int Ref) {
 	if (m_Balance - Amount < 0.00) { return false; }
 	m_Balance -= Amount;
 	std::string desc = "Withdraw";
-	if (Ref != 0) { desc = "Transfer to account " + Ref; }
+	if (Ref != 0) { desc = "Transfer to account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
 	return true;
@@ -63,8 +63,9 @@ std::string Savings::Truncate2dp(double Value) const {
 
 
 std::string Savings::ToString() const {
-	std::string a = "";
-	a += "Savings account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
+	std::string a = "Savings";
+	if (m_ISA) { a = "ISA"; }
+	a += " account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
 	for (auto entry : m_History) {
 		a += entry->ToString();
     }
