@@ -10,7 +10,7 @@ public:
 	std::string ToString() const;
 
 protected:
-	double const m_OverdraftLimit;
+	double const m_OverdraftLimit = 500.00;
 	double m_Overdraft;
 	double GetBalance() const;
 	std::string Truncate2dp(double Value) const;
