@@ -14,4 +14,4 @@ project(test)
 #add_executable (savings savings.cpp)
 #add_executable (current current.cpp)
 
-add_executable (test LincBank.cpp transaction.cpp savings.cpp current.cpp)
+add_executable (test LincBank.cpp transaction.cpp savings.cpp current.cpp mainmethods.cpp)
