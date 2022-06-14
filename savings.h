@@ -9,12 +9,11 @@ public:
 	~Savings();
 	bool Deposit(double Amount);
 	bool Withdraw(double Amount);
-	double ComputeInterest(int Years);
-	std::string ToString();
+	double ComputeInterest(int Years) const;
+	std::string ToString() const;
 
 protected:
 	double m_InterestRate = 0.85;
 	bool m_ISA;
-	double GetBalance();
-	std::string Truncate2dp(double Value);
+	std::string Truncate2dp(double Value) const;
 };

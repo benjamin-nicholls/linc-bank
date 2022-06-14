@@ -44,21 +44,21 @@ bool Savings::Withdraw(double Amount) {
 }
 
 
-double Savings::ComputeInterest(int Years) {
+double Savings::ComputeInterest(int Years) const {
 	int n = 12;  // Unit time (monthly = 12).
 	double finalAmount = m_Balance * pow(1 + m_InterestRate / n, n * Years);
 	return finalAmount;
 }
 
 
-std::string Savings::Truncate2dp(double Value) {
+std::string Savings::Truncate2dp(double Value) const {
 	std::string value = std::to_string(Value);
 	value = value.substr(0, value.find('.')  + 3);
 	return value;
 }
 
 
-std::string Savings::ToString() {
+std::string Savings::ToString() const {
 	std::string a = "";
 	a += "Savings account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
 	for (auto entry : m_History) {

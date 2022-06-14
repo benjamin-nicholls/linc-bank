@@ -10,7 +10,7 @@ public:
 	~Account() {}
 	virtual bool Deposit(double Amount) = 0;
 	virtual bool Withdraw(double Amount) = 0;
-	virtual std::string ToString() = 0;
+	virtual std::string ToString() const = 0;
 
 protected:
 	double m_Balance;

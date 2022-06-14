@@ -9,10 +9,10 @@ private:
 	std::string m_Type;
 	double m_Value;
 	std::time_t m_Time;
-	std::string Truncate2dp(double Value);
+	std::string Truncate2dp(double Value) const;
 
 public:
 	Transaction(std::string Type, double Value);
 	~Transaction();
-	std::string ToString();
+	std::string ToString() const;
 };

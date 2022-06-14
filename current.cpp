@@ -55,19 +55,19 @@ bool Current::Withdraw(double Amount) {
 }
 
 
-double Current::GetBalance() {
+double Current::GetBalance() const {
 	return m_Balance - m_Overdraft;
 }
 
 
-std::string Current::Truncate2dp(double Value) {
+std::string Current::Truncate2dp(double Value) const {
 	std::string value = std::to_string(Value);
 	value = value.substr(0, value.find('.')  + 3);
 	return value;
 }
 
 
-std::string Current::ToString() {
+std::string Current::ToString() const {
 	std::string a = "";
 
 	a += "Current account | Balance: £" + Current::Truncate2dp(this->GetBalance()) + "\n";
