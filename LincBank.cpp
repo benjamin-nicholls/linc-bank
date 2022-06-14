@@ -19,9 +19,8 @@ Good luck!
 #include <vector>
 #include <string>
 
-
-//#include "current.h"
-//#include "savings.h"
+#include "current.h"
+#include "savings.h"
 #include "mainmethods.h"
 
 
@@ -36,7 +35,7 @@ int main() {
 	int activeAccount = 0;
 
 	std::cout << "~~~ Welcome to LincBank! ~~~" << std::endl;
-	MainMethods::printMenuOptions();
+	MainMethods::PrintMenuOptions();
 	std::cout << "Press any key to continue...";
 	std::cin.ignore();
  
@@ -70,7 +69,7 @@ int main() {
 		try {
 			if (command.compare("options") == 0) {
 				// Display the various commands to the user.  
-				MainMethods::printMenuOptions();
+				MainMethods::PrintMenuOptions();
 
 			} else if (command.compare("open") == 0) {
 				// Allow a user to open an account.  
@@ -80,36 +79,35 @@ int main() {
 				std::string accountType = "";
 
 				// Check deposit is valid.
-				if (!MainMethods::isCurrency(parameters[2])) { throw NotCurrencyException(); }
-
+				if (!MainMethods::IsCurrency(parameters[2])) { throw NotCurrencyException(); }
 				deposit = std::stod(parameters[2]);
 
 				try {
 					if (parameters[1] == "1") {
+						// Only allowed one current account.
 						if (currentAccount) { throw MaxCurrentAccountException(); }
 						accountType = "Current";
 						Account* a = new Current(deposit);
 						accounts.push_back(a);
 						currentAccount = true;
 						flagAccountCreated = true;
-
 					} else if (parameters[1] == "2") {
 						accountType = "Savings";
 						Account* a = new Savings(deposit);
 						accounts.push_back(a);
 						flagAccountCreated = true;
-
 					} else if (parameters[1] == "3") {
+						// Only allowed one ISA account.
 						if (isaAccount) { throw MaxIsaAccountException(); }
 						accountType = "ISA";
 						Account* a = new Savings(deposit, true);
 						accounts.push_back(a);
 						isaAccount = true;
 						flagAccountCreated = true;
-
 					} else {
 						std::cout << "Account type '" << parameters[1] << "' not recognised.";
 					}
+
 				} catch (const InitialDepositBelowISARequiredException &e) {
 					std::cout << e.what() << std::endl;
 				} catch (const InitialDepositBelowZeroException &e) {
@@ -118,6 +116,7 @@ int main() {
 
 				if (flagAccountCreated) {
 					numberOfAccounts++;
+					// Update active account. Used for withdrawing and depositing.
 					activeAccount = numberOfAccounts - 1;
 					std::cout << accountType << " Account number '" << accounts.size() << "' created." << std::endl;
 				}
@@ -127,10 +126,11 @@ int main() {
 				// Alternatively, display all accounts if no index is provided.
 				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
 				if (parameters.size() == 1) {
-					std::cout << MainMethods::viewAllAccounts(accounts) << std::endl;
+					std::cout << MainMethods::ViewAllAccounts(accounts) << std::endl;
 				} else {
+					// Catch errors in a try block from where the method is called.
 					try {
-						std::cout << MainMethods::viewSingleAccount(accounts, parameters[1], numberOfAccounts) << std::endl;
+						std::cout << MainMethods::ViewSingleAccount(accounts, parameters[1], numberOfAccounts) << std::endl;
 						std::string p = parameters[1];
 						activeAccount = std::stoi(p) - 1;
 					} catch (const AccountNumberOutOfRangeException &e) {
@@ -146,11 +146,11 @@ int main() {
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				Account* a = accounts[activeAccount];
 				try {
-					if (!MainMethods::withdraw(a, parameters[1])) {
+					if (!MainMethods::Withdraw(a, parameters[1])) {
 						std::cout << "Could not withdraw £" << parameters[1] << " from account " << activeAccount + 1 << "." << std::endl;
 					} else {
 						std::cout << "Withdrawn £" << parameters[1] << " from account " << activeAccount + 1 << "." << std::endl;
-						std::cout << a->ToString() << std::endl;
+						std::cout << a->toString() << std::endl;
 					}
 				} catch (const NotCurrencyException &e) {
 					std::cout << e.what() << std::endl;
@@ -162,11 +162,11 @@ int main() {
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				Account* a = accounts[activeAccount];
 				try {
-					if (!MainMethods::deposit(a, parameters[1])) {
+					if (!MainMethods::Deposit(a, parameters[1])) {
 						std::cout << "Could not deposit £" << parameters[1] << " into account " << activeAccount + 1 << "." << std::endl;
 					} else {
 						std::cout << "Deposited £" << parameters[1] << " into account " << activeAccount + 1 << "." << std::endl;
-						std::cout << a->ToString() << std::endl;
+						std::cout << a->toString() << std::endl;
 					}
 				} catch (const NotCurrencyException &e) {
 					std::cout << e.what() << std::endl;
@@ -178,7 +178,7 @@ int main() {
 				// Allow user to transfer funds between accounts.  
 				// i.e., a withdrawal followed by a deposit!
 				try {
-					std::cout << MainMethods::transfer(accounts, parameters[1], parameters[2], parameters[3], numberOfAccounts) << std::endl;
+					std::cout << MainMethods::Transfer(accounts, parameters[1], parameters[2], parameters[3], numberOfAccounts) << std::endl;
 				} catch (const NotIntException &e) {
 					std::cout << e.what() << std::endl;
 				} catch (const AccountNumberOutOfRangeException &e) {
@@ -188,15 +188,13 @@ int main() {
 				} catch (const WithdrawFailException &e) {
 					std::cout << e.what() << std::endl;
 				}
-				   
-
 
 			} else if (command.compare("project") == 0) {
 				// Compute compound interest t years into the future.
 				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				try {
-					double interest = MainMethods::project(accounts[activeAccount], parameters[1]);
+					double interest = MainMethods::Project(accounts[activeAccount], parameters[1]);
 					std::cout << "Projected balance: £" << interest << std::endl;
 				} catch (const NotIntException &e) {
 					std::cout << e.what() << std::endl;
