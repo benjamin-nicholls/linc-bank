@@ -5,12 +5,12 @@ class Current: public Account {
 public:
 	Current(double InitialDeposit = 0.00);
 	~Current();
-	bool Deposit(double Amount);
-	bool Withdraw(double Amount);
+	bool Deposit(double Amount, int Ref = 0);
+	bool Withdraw(double Amount, int Ref = 0);
 	std::string ToString() const;
 
 protected:
-	double m_OverdraftLimit = 500.00;
+	double const m_OverdraftLimit;
 	double m_Overdraft;
 	double GetBalance() const;
 	std::string Truncate2dp(double Value) const;
