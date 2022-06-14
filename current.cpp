@@ -8,7 +8,6 @@ Current::Current(double InitialDeposit) {
 	}
 	m_Balance = InitialDeposit;
 	m_Overdraft = 0.00;
-	m_OverdraftLimit = 500.00;
 	Transaction* t = new Transaction("Open Current Acount", m_Balance);
 	m_History.push_back(t);
 }
@@ -28,8 +27,8 @@ bool Current::Deposit(double Amount, int Ref) {
 		m_Overdraft = -a;
 	}
 	std::string desc = "Deposit";
-	if (Ref != 0) { desc = "Transfer from account " + Ref; }
-	Transaction* t = new Transaction("Deposit", Amount);
+	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
+	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
 	return true;
 
@@ -50,8 +49,8 @@ bool Current::Withdraw(double Amount, int Ref) {
 		}
 	}
 	std::string desc = "Withdraw";
-	if (Ref != 0) { desc = "Transfer to account " + Ref; }
-	Transaction* t = new Transaction("Withdraw", Amount);
+	if (Ref != 0) { desc = "Transfer to account " + std::to_string(Ref); }
+	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
 	return true;
 }
