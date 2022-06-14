@@ -6,8 +6,8 @@
 
 class Account {
 public:
-	Account() {}
-	~Account() {}
+	Account() {};
+	~Account() {};
 	virtual bool Deposit(double Amount, int Ref = 0) = 0;
 	virtual bool Withdraw(double Amount, int Ref = 0) = 0;
 	virtual std::string ToString() const = 0;
@@ -68,6 +68,14 @@ public:
 };
 
 
+struct NotEnoughAccountsException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: You have not opened enough accounts yet.";
+	}
+};
+
+
 struct NotEnoughParametersException : public std::exception {
 public:
 	virtual const char* what() const throw() {
@@ -96,6 +104,14 @@ struct MaxIsaAccountException : public std::exception {
 public:
 	virtual const char* what() const throw() {
 		return "ERROR: You have opened the maximum number of ISA saving account(s).";
+	}
+};
+
+
+struct WithdrawFailException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: Could not withdraw from the account.";
 	}
 };
 
