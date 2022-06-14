@@ -19,49 +19,10 @@ Good luck!
 #include <vector>
 #include <string>
 
-#include "current.h"
-#include "savings.h"
 
-
-
-// to do todo blank check
-// add in consts wherever possible
-
-
-// Shows all menu options to the user.
-void printMenuOptions() {
-	std::cout << "  OPTIONS" << std::endl;
-	std::cout << "\topen type initial_deposit" << "\t" << "open a current(1), savings(2) or ISA(3) account" << std::endl;
-	std::cout << "\tview[index]" << "\t\t\t" << "view balance and recent transactions" << std::endl;
-	std::cout << "\twithdraw sum" << "\t\t\t" << "withdraw funds from most recently viewed account" << std::endl;
-	std::cout << "\tdeposit sum" << "\t\t\t" << "deposit funds into most recently viewed account" << std::endl;
-	std::cout << "\ttransfer src dest sum" << "\t\t" << "transfer funds between accounts" << std::endl;
-	std::cout << "\tproject years" << "\t\t\t" << "project balance forward in time" << std::endl;
-	std::cout << "\texit" << "\t\t\t\t" << "close this application" << std::endl;
-	std::cout << "\toptions" << "\t\t\t\t" << "view these options again" << std::endl;
-}
-
-
-bool isCurrency(std::string str) {
-	for (auto a : str) {
-		if (!isdigit(a)) {
-			if (a != '.') {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-
-bool isInt(std::string str) {
-	for (auto a : str) {
-		if (!isdigit(a)) {
-			return false;
-		}
-	}
-	return true;
-}
+//#include "current.h"
+//#include "savings.h"
+#include "mainmethods.h"
 
 
 int main() {
@@ -75,7 +36,7 @@ int main() {
 	int activeAccount = 0;
 
 	std::cout << "~~~ Welcome to LincBank! ~~~" << std::endl;
-	printMenuOptions();
+	MainMethods::printMenuOptions();
 	std::cout << "Press any key to continue...";
 	std::cin.ignore();
  
@@ -109,7 +70,7 @@ int main() {
 		try {
 			if (command.compare("options") == 0) {
 				// Display the various commands to the user.  
-				printMenuOptions();
+				MainMethods::printMenuOptions();
 
 			} else if (command.compare("open") == 0) {
 				// Allow a user to open an account.  
@@ -119,7 +80,7 @@ int main() {
 				std::string accountType = "";
 
 				// Check deposit is valid.
-				if (!isCurrency(parameters[2])) { throw NotCurrencyException(); }
+				if (!MainMethods::isCurrency(parameters[2])) { throw NotCurrencyException(); }
 
 				deposit = std::stod(parameters[2]);
 
@@ -143,6 +104,7 @@ int main() {
 						accountType = "ISA";
 						Account* a = new Savings(deposit, true);
 						accounts.push_back(a);
+						isaAccount = true;
 						flagAccountCreated = true;
 
 					} else {
@@ -165,10 +127,10 @@ int main() {
 				// Alternatively, display all accounts if no index is provided.
 				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
 				if (parameters.size() == 1) {
-					std::cout << viewAllAccounts(accounts) << std::endl;
+					std::cout << MainMethods::viewAllAccounts(accounts) << std::endl;
 				} else {
 					try {
-						std::cout << viewSingleAccount(accounts, parameters[1], numberOfAccounts) << std::endl;
+						std::cout << MainMethods::viewSingleAccount(accounts, parameters[1], numberOfAccounts) << std::endl;
 						std::string p = parameters[1];
 						activeAccount = std::stoi(p) - 1;
 					} catch (const AccountNumberOutOfRangeException &e) {
@@ -184,7 +146,7 @@ int main() {
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				Account* a = accounts[activeAccount];
 				try {
-					if (!withdraw(a, parameters[1])) {
+					if (!MainMethods::withdraw(a, parameters[1])) {
 						std::cout << "Could not withdraw £" << parameters[1] << " from account " << activeAccount + 1 << "." << std::endl;
 					} else {
 						std::cout << "Withdrawn £" << parameters[1] << " from account " << activeAccount + 1 << "." << std::endl;
@@ -200,7 +162,7 @@ int main() {
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				Account* a = accounts[activeAccount];
 				try {
-					if (!deposit(a, parameters[1])) {
+					if (!MainMethods::deposit(a, parameters[1])) {
 						std::cout << "Could not deposit £" << parameters[1] << " into account " << activeAccount + 1 << "." << std::endl;
 					} else {
 						std::cout << "Deposited £" << parameters[1] << " into account " << activeAccount + 1 << "." << std::endl;
@@ -211,34 +173,30 @@ int main() {
 				}
 				
 			} else if (command.compare("transfer") == 0) {
-				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
+				if (numberOfAccounts < 3) { throw NotEnoughAccountsException(); }
 				if (parameters.size() < 4) { throw NotEnoughParametersException(); }
 				// Allow user to transfer funds between accounts.  
 				// i.e., a withdrawal followed by a deposit!
-				int indexA = 0;
-				int indexB = 0;
-				//todo to do blank check add in checks here for numbers
-				Account* a = accounts[stod(parameters[1]) - 1];
-				Account* b = accounts[stod(parameters[2]) - 1];
-				double value = stod(parameters[3]);
-
-				bool flag = a->Withdraw(value);
-				if (!flag) {
-					std::cout << "Could not withdraw £" << value << " from account " << indexA << "." << std::endl;
-				} else {
-					b->Deposit(value);
-					std::cout << "Transfered £" << value << " from account " << indexA
-						<< " to account " << indexB << ".\n" << std::endl;
-					std::cout << a->ToString() << std::endl;
-					std::cout << b->ToString() << std::endl;
+				try {
+					std::cout << MainMethods::transfer(accounts, parameters[1], parameters[2], parameters[3], numberOfAccounts) << std::endl;
+				} catch (const NotIntException &e) {
+					std::cout << e.what() << std::endl;
+				} catch (const AccountNumberOutOfRangeException &e) {
+					std::cout << e.what() << std::endl;				
+				} catch (const NotCurrencyException &e) {
+					std::cout << e.what() << std::endl;
+				} catch (const WithdrawFailException &e) {
+					std::cout << e.what() << std::endl;
 				}
+				   
+
 
 			} else if (command.compare("project") == 0) {
 				// Compute compound interest t years into the future.
 				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				try {
-					double interest = project(accounts[activeAccount], parameters[1]);
+					double interest = MainMethods::project(accounts[activeAccount], parameters[1]);
 					std::cout << "Projected balance: £" << interest << std::endl;
 				} catch (const NotIntException &e) {
 					std::cout << e.what() << std::endl;
@@ -262,6 +220,10 @@ int main() {
 			std::cout << e.what() << std::endl;
 		} catch (const MaxIsaAccountException &e) {
 			std::cout << e.what() << std::endl;
+		} catch (const AccountNumberOutOfRangeException &e) {
+			std::cout << e.what() << std::endl;
+		} catch (const NotEnoughAccountsException &e) {
+			std::cout << e.what() << std::endl;
 		}
 	}
 	// Don't have to delete accounts as program will terminate anyway. -- this is my comment, make sure this is true to do todo blank check
@@ -270,47 +232,6 @@ int main() {
 }
 
 
-static std::string viewAllAccounts (std::vector<Account*> accounts) {
-	std::string str = "";
-	for (auto a : accounts) {
-		str += a->ToString();
-	}
-	return str;
-}
-
-
-static std::string viewSingleAccount (std::vector<Account*> &accounts, std::string &accountNumber, int &numberOfAccounts) {
-	if (!isInt(accountNumber)) { throw NotIntException(); }
-	int index = stoi(accountNumber);
-	if (index > numberOfAccounts) { throw AccountNumberOutOfRangeException(); }
-	Account* a = accounts[index - 1];
-	return a->ToString();		
-}
-
-
-static bool withdraw (Account* a, std::string Value) {
-	if (!isCurrency(Value)) { throw NotCurrencyException();	}
-	double value = std::stod(Value);
-	if (a->Withdraw(value)) { return true; }
-	return false;
-}
-
-
-static bool deposit (Account* a, std::string Value) {
-	if (!isCurrency(Value)) { throw NotCurrencyException();	}
-	double value = std::stod(Value);
-	if (a->Deposit(value)) { return true; }
-	return false;
-}
-
-
-static double project (Account* a, std::string Years) {
-	if (!isInt(Years)) { throw NotIntException(); }
-	// If dynamic cast was unsuccessful, the account isn't a savings account.
-	Savings* s = dynamic_cast<Savings*>(a);
-	if (s == nullptr) { throw DynamicCastUnsuccessfulException(); }
-	return s->ComputeInterest(std::stoi(Years));
-}
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
