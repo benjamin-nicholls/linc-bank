@@ -5,9 +5,9 @@ class Current: public Account {
 public:
 	Current(double InitialDeposit = 0.00);
 	~Current();
-	bool Deposit(double Amount, int Ref = 0);
-	bool Withdraw(double Amount, int Ref = 0);
-	std::string ToString() const;
+	bool deposit(double Amount, int Ref = 0);
+	bool withdraw(double Amount, int Ref = 0);
+	std::string toString() const;
 
 protected:
 	double const m_OverdraftLimit = 500.00;

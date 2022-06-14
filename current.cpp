@@ -17,7 +17,7 @@ Current::~Current() {
 }
 
 
-bool Current::Deposit(double Amount, int Ref) {
+bool Current::deposit(double Amount, int Ref) {
 	if (Amount <= 0.00) { return false; }
 	double a = Amount - m_Overdraft;
 	if (a > 0) {
@@ -35,7 +35,7 @@ bool Current::Deposit(double Amount, int Ref) {
 }
 
 
-bool Current::Withdraw(double Amount, int Ref) {
+bool Current::withdraw(double Amount, int Ref) {
 	if (Amount <= 0.00) { return false; }
 	if (m_Balance + m_OverdraftLimit - m_Overdraft < Amount) { return false; }
 	
@@ -68,12 +68,12 @@ std::string Current::Truncate2dp(double Value) const {
 }
 
 
-std::string Current::ToString() const {
+std::string Current::toString() const {
 	std::string a = "";
 
 	a += "Current account | Balance: £" + Current::Truncate2dp(this->GetBalance()) + "\n";
 	for (auto entry : m_History) {
-		a += entry->ToString();
+		a += entry->toString();
     }
 	return a;                                                           
 }

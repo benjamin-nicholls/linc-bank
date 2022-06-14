@@ -16,7 +16,7 @@ Transaction::~Transaction() {
 }
 
 
-std::string Transaction::ToString() const {
+std::string Transaction::toString() const {
 	return "-- " + m_Type + ": " + m_Currency + Transaction::Truncate2dp(m_Value) + " on " + ctime(&m_Time);
 }
 

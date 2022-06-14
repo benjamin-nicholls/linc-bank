@@ -14,5 +14,5 @@ private:
 public:
 	Transaction(std::string Type, double Value);
 	~Transaction();
-	std::string ToString() const;
+	std::string toString() const;
 };

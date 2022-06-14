@@ -3,7 +3,7 @@
 
 
 // Shows all menu options to the user.
-void MainMethods::printMenuOptions() {
+void MainMethods::PrintMenuOptions() {
     std::cout << "  OPTIONS" << std::endl;
     std::cout << "\topen type initial_deposit" << "\t" << "open a current(1), savings(2) or ISA(3) account" << std::endl;
     std::cout << "\tview[index]" << "\t\t\t" << "view balance and recent transactions" << std::endl;
@@ -16,7 +16,7 @@ void MainMethods::printMenuOptions() {
 }
 
 
-bool MainMethods::isCurrency(std::string Str) {
+bool MainMethods::IsCurrency(std::string Str) {
     for (auto a : Str) {
         if (!std::isdigit(a)) {
             if (a != '.') {
@@ -28,7 +28,7 @@ bool MainMethods::isCurrency(std::string Str) {
 }
 
 
-bool MainMethods::isInt(std::string Str) {
+bool MainMethods::IsInt(std::string Str) {
     for (auto a : Str) {
         if (!std::isdigit(a)) {
             return false;
@@ -45,44 +45,44 @@ std::string MainMethods::Truncate2dp(double Value) {
 }
 
 
-std::string MainMethods::viewAllAccounts (std::vector<Account*> &Accounts) {
+std::string MainMethods::ViewAllAccounts (std::vector<Account*> &Accounts) {
     std::string str = "";
     for (auto a : Accounts) {
-        str += a->ToString();
+        str += a->toString();
     }
     return str;
 }
 
 
-std::string MainMethods::viewSingleAccount (std::vector<Account*> &Accounts, std::string &AccountNumber, int &NumberOfAccounts) {
-    if (!MainMethods::isInt(AccountNumber)) { throw NotIntException(); }
+std::string MainMethods::ViewSingleAccount (std::vector<Account*> &Accounts, std::string &AccountNumber, int &NumberOfAccounts) {
+    if (!MainMethods::IsInt(AccountNumber)) { throw NotIntException(); }
     int index = std::stoi(AccountNumber);
     if (index > NumberOfAccounts) { throw AccountNumberOutOfRangeException(); }
     if (index == 0) { throw AccountNumberOutOfRangeException(); }
     Account* a = Accounts[index - 1];
-    return a->ToString();		
+    return a->toString();		
 }
 
 
-bool MainMethods::withdraw(Account* A, std::string Value) {
-    if (!MainMethods::isCurrency(Value)) { throw NotCurrencyException();	}
+bool MainMethods::Withdraw(Account* A, std::string Value) {
+    if (!MainMethods::IsCurrency(Value)) { throw NotCurrencyException();	}
     double value = std::stod(Value);
-    if (A->Withdraw(value)) { return true; }
+    if (A->withdraw(value)) { return true; }
     return false;
 }
 
 
-bool MainMethods::deposit(Account* A, std::string Value) {
-    if (!MainMethods::isCurrency(Value)) { throw NotCurrencyException();	}
+bool MainMethods::Deposit(Account* A, std::string Value) {
+    if (!MainMethods::IsCurrency(Value)) { throw NotCurrencyException();	}
     double value = std::stod(Value);
-    if (A->Deposit(value)) { return true; }
+    if (A->deposit(value)) { return true; }
     return false;
 }
 
 
-std::string MainMethods::transfer(std::vector<Account*> &Accounts, std::string Source, std::string Destination, std::string Value, int &NumberOfAccounts) {
-    if (!MainMethods::isInt(Source)) { throw NotIntException(); }
-    if (!MainMethods::isInt(Destination)) { throw NotIntException(); }
+std::string MainMethods::Transfer(std::vector<Account*> &Accounts, std::string Source, std::string Destination, std::string Value, int &NumberOfAccounts) {
+    if (!MainMethods::IsInt(Source)) { throw NotIntException(); }
+    if (!MainMethods::IsInt(Destination)) { throw NotIntException(); }
     int source = std::stoi(Source);
     int destination = std::stoi(Destination);
     if (source == 0) { throw AccountNumberOutOfRangeException(); }
@@ -90,21 +90,21 @@ std::string MainMethods::transfer(std::vector<Account*> &Accounts, std::string S
     if (destination == 0) { throw AccountNumberOutOfRangeException(); }
     if (destination > NumberOfAccounts) { throw AccountNumberOutOfRangeException(); }
     if (source == destination) { throw AccountNumberOutOfRangeException(); }
-    if (!MainMethods::isCurrency(Value)) { throw NotCurrencyException();	}
+    if (!MainMethods::IsCurrency(Value)) { throw NotCurrencyException();	}
     Account* a = Accounts[source - 1];
     Account* b = Accounts[destination - 1];
     double value = std::stod(Value);
-    if (!a->Withdraw(value, destination)) { throw WithdrawFailException(); }
-    b->Deposit(value, source);
-    return a->ToString() + b->ToString();
+    if (!a->withdraw(value, destination)) { throw WithdrawFailException(); }
+    b->deposit(value, source);
+    return a->toString() + b->toString();
 }
 
 
-double MainMethods::project(Account* a, std::string Years) {
-    if (!MainMethods::isInt(Years)) { throw NotIntException(); }
+double MainMethods::Project(Account* a, std::string Years) {
+    if (!MainMethods::IsInt(Years)) { throw NotIntException(); }
     // If dynamic cast was unsuccessful, the account isn't a savings account.
     Savings* s = dynamic_cast<Savings*>(a);
     if (s == nullptr) { throw DynamicCastUnsuccessfulException(); }
-    return s->ComputeInterest(std::stoi(Years));
+    return s->computeInterest(std::stoi(Years));
 }
 

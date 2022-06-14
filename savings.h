@@ -7,10 +7,10 @@ class Savings: public Account, public InterestEarning {
 public:
 	Savings(double InitialDeposit = 0.00, bool Isa = false);
 	~Savings();
-	bool Deposit(double Amount, int Ref = 0);
-	bool Withdraw(double Amount, int Ref = 0);
-	double ComputeInterest(int Years) const;
-	std::string ToString() const;
+	bool deposit(double Amount, int Ref = 0);
+	bool withdraw(double Amount, int Ref = 0);
+	double computeInterest(int Years) const;
+	std::string toString() const;
 
 protected:
 	double m_InterestRate;

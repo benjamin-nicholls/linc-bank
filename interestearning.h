@@ -3,6 +3,6 @@
 
 class InterestEarning {
 public:
-	virtual double ComputeInterest(int Years) const = 0;
+	virtual double computeInterest(int Years) const = 0;
 
 };
