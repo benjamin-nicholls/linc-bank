@@ -10,9 +10,7 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 	m_InterestRate = 0.85;
 	std::string accountType = "Savings";
 	if (m_ISA) {
-		if (InitialDeposit < 1000) {
-			throw InitialDepositBelowISARequiredException();
-		}
+		if (InitialDeposit < 1000) { throw InitialDepositBelowISARequiredException(); }
 		m_InterestRate = 1.15;
 		accountType = "ISA";
 	}
@@ -22,6 +20,9 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 
 
 Savings::~Savings() {
+	for (auto t : m_History) {
+		delete t;
+	}
 }
 
 
