@@ -44,22 +44,24 @@ int main() {
 		count++;
 
 		parameters.clear();  // Clear ready for next command.  
+		userCommand.clear();
 
 		std::cout << std::endl << ">>> ";
-
 		std::getline(std::cin, userCommand);
 		
 		char* p_cstr = new char[userCommand.length() + 1];
 		strcpy(p_cstr, userCommand.c_str());
-
+		
 		char* p_token;
 		p_token = strtok(p_cstr, " ");
-
+		// If user inputs nothing, skip.
+		if (p_token == nullptr) { continue; }
 		while (p_token != NULL) {
 			parameters.push_back(p_token);
 			p_token = strtok(NULL, " ");
 		}
-		
+		delete[] p_cstr;
+
 		// Define all commands as per the brief.  
 		std::string command = parameters[0];
 
@@ -127,7 +129,6 @@ int main() {
 				if (parameters.size() == 1) {
 					std::cout << MainMethods::ViewAllAccounts(accounts) << std::endl;
 				} else {
-					
 					std::cout << MainMethods::ViewSingleAccount(accounts, parameters[1], numberOfAccounts) << std::endl;
 					std::string p = parameters[1];
 					activeAccount = std::stoi(p) - 1;
@@ -213,7 +214,11 @@ int main() {
 		}
 						
 	}
-	// Don't have to delete accounts as program will terminate anyway. -- this is my comment, make sure this is true to do todo blank check
+
+	// Clean up. 
+	for (auto a : accounts) {
+		delete a;
+	}
 	std::cout << "Press any key to quit...";
 	std::getchar();
 }
