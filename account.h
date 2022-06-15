@@ -20,53 +20,14 @@ protected:
 
 
 // Custom exceptions.
-struct InitialDepositBelowZeroException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Initial deposit must be above £0.00.";
-	}
-};
 
-
-struct InitialDepositBelowISARequiredException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Initial deposit must be at least £1000.";
-	}
-};
-
-
-struct DynamicCastUnsuccessfulException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Selected account is not a savings account.";
-	}
-};
-
-
-struct NotIntException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Value was not an integer.";
-	}
-};
-
-
-struct NotCurrencyException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Value was not a currency format.";
-	}
-};
-
-
+// Account exceptions.
 struct NoAccountsCreatedException : public std::exception {
 public:
 	virtual const char* what() const throw() {
 		return "ERROR: You have not opened any accounts yet.";
 	}
 };
-
 
 struct NotEnoughAccountsException : public std::exception {
 public:
@@ -75,22 +36,12 @@ public:
 	}
 };
 
-
-struct NotEnoughParametersException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: You do not have enough parameters.";
-	}
-};
-
-
 struct AccountNumberOutOfRangeException : public std::exception {
 public:
 	virtual const char* what() const throw() {
 		return "ERROR: Account number specified out of range.";
 	}
 };
-
 
 struct MaxCurrentAccountException : public std::exception {
 public:
@@ -99,7 +50,6 @@ public:
 	}
 };
 
-
 struct MaxIsaAccountException : public std::exception {
 public:
 	virtual const char* what() const throw() {
@@ -107,7 +57,45 @@ public:
 	}
 };
 
+// Number exceptions.
+struct NotIntException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: Value was not an integer.";
+	}
+};
 
+struct NotCurrencyException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: Value was not a currency format.";
+	}
+};
+
+// Parameters exceptions.
+struct NotEnoughParametersException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: You do not have enough parameters.";
+	}
+};
+
+// Deposit exceptions.
+struct InitialDepositBelowZeroException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: Initial deposit must be above £0.00.";
+	}
+};
+
+struct InitialDepositBelowISARequiredException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: Initial deposit must be at least £1000.";
+	}
+};
+
+// Transaction exceptions.
 struct WithdrawFailException : public std::exception {
 public:
 	virtual const char* what() const throw() {
@@ -115,3 +103,10 @@ public:
 	}
 };
 
+// Othet exceptions.
+struct DynamicCastUnsuccessfulException : public std::exception {
+public:
+	virtual const char* what() const throw() {
+		return "ERROR: Selected account is not a savings account.";
+	}
+};
