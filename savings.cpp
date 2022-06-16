@@ -20,8 +20,8 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 
 
 Savings::~Savings() {
-	for (auto t : m_History) {
-		delete t;
+	for (auto transaction : m_History) {
+		delete transaction;
 	}
 }
 
@@ -51,24 +51,22 @@ bool Savings::withdraw(double &Amount, int Ref) {
 
 double Savings::computeInterest(int Years) const {
 	int n = 12;  // Unit time (monthly = 12).
-	double finalAmount = m_Balance * pow(1 + m_InterestRate / 100 / n, n * Years);
-	return finalAmount;
+	return m_Balance * pow(1 + m_InterestRate / 100 / n, n * Years);
 }
 
 
 std::string Savings::Truncate2dp(double Value) const {
 	std::string value = std::to_string(Value);
-	value = value.substr(0, value.find('.')  + 3);
-	return value;
+	return value.substr(0, value.find('.')  + 3);
 }
 
 
 std::string Savings::toString() const {
-	std::string a = "Savings";
-	if (m_ISA) { a = "ISA"; }
-	a += " account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
+	std::string str = "Savings";
+	if (m_ISA) { str = "ISA"; }
+	str += " account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
 	for (auto entry : m_History) {
-		a += entry->toString();
+		str += entry->toString();
     }
-	return a;   
+	return str;   
 }

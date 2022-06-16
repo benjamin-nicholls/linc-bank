@@ -17,9 +17,9 @@ void MainMethods::PrintMenuOptions() {
 
 
 bool MainMethods::IsCurrency(std::string &Str) {
-    for (auto a : Str) {
-        if (!std::isdigit(a)) {
-            if (a != '.') {
+    for (auto c : Str) {
+        if (!std::isdigit(c)) {
+            if (c != '.') {
                 return false;
             }
         }
@@ -29,8 +29,8 @@ bool MainMethods::IsCurrency(std::string &Str) {
 
 
 bool MainMethods::IsInt(std::string &Str) {
-    for (auto a : Str) {
-        if (!std::isdigit(a)) {
+    for (auto c : Str) {
+        if (!std::isdigit(c)) {
             return false;
         }
     }
@@ -40,8 +40,7 @@ bool MainMethods::IsInt(std::string &Str) {
 
 std::string MainMethods::Truncate2dp(double &Value) {
     std::string value = std::to_string(Value);
-    value = value.substr(0, value.find('.')  + 3);
-    return value;
+    return value.substr(0, value.find('.')  + 3);
 }
 
 
@@ -81,14 +80,17 @@ bool MainMethods::Deposit(Account* &A, std::string &Value) {
 
 
 std::string MainMethods::Transfer(std::vector<Account*> &Accounts, std::string &Source, std::string &Destination, std::string &Value, int &NumberOfAccounts) {
+    // Guard against any possible errors, throw exception for each.
     if (!MainMethods::IsInt(Source)) { throw WrongTypeException("ERROR: Value was not an integer."); }
     if (!MainMethods::IsInt(Destination)) { throw WrongTypeException("ERROR: Value was not an integer."); }
     int source = std::stoi(Source);
     int destination = std::stoi(Destination);
+    // Check account number is in range.
     if (source == 0) { throw AccountNumberOutOfRangeException(); }
     if (source > NumberOfAccounts) { throw AccountNumberOutOfRangeException(); }
     if (destination == 0) { throw AccountNumberOutOfRangeException(); }
     if (destination > NumberOfAccounts) { throw AccountNumberOutOfRangeException(); }
+    // Cannot transfer to and from the same account.
     if (source == destination) { throw AccountNumberOutOfRangeException(); }
     if (!MainMethods::IsCurrency(Value)) { throw WrongTypeException("ERROR: Value was not a currency format.");	}
     Account* a = Accounts[source - 1];
@@ -102,7 +104,7 @@ std::string MainMethods::Transfer(std::vector<Account*> &Accounts, std::string &
 
 double MainMethods::Project(Account* &A, std::string &Years) {
     if (!MainMethods::IsInt(Years)) { throw WrongTypeException("ERROR: Value was not an integer."); }
-    // If dynamic cast was unsuccessful, the account isn't a savings account.
+    // If dynamic cast is unsuccessful, the account isn't a savings account.
     Savings* s = dynamic_cast<Savings*>(A);
     if (s == nullptr) { throw DynamicCastUnsuccessfulException("ERROR: Selected account is not a savings account."); }
     return s->computeInterest(std::stoi(Years));

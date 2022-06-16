@@ -12,10 +12,6 @@ Transaction::Transaction(std::string Type, double Value) {
 }
 
 
-Transaction::~Transaction() {
-}
-
-
 std::string Transaction::toString() const {
 	return "-- " + m_Type + ": " + m_Currency + Transaction::Truncate2dp(m_Value) + " on " + ctime(&m_Time);
 }
@@ -23,6 +19,5 @@ std::string Transaction::toString() const {
 
 std::string Transaction::Truncate2dp(double Value) const {
 	std::string value = std::to_string(Value);
-	value = value.substr(0, value.find('.')  + 3);
-	return value;
+	return value.substr(0, value.find('.')  + 3);
 }

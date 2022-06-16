@@ -13,6 +13,6 @@ private:
 
 public:
 	Transaction(std::string Type, double Value);
-	~Transaction();
+	~Transaction() {};
 	std::string toString() const;
 };
