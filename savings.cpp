@@ -2,17 +2,14 @@
 #include <cmath>  // Exponent.
 
 Savings::Savings(double InitialDeposit, bool Isa) {
-	if (InitialDeposit < 0) {
-		throw InitialDepositBelowRequiredException();
-	}
+	if (InitialDeposit < 0) { throw InitialDepositBelowRequiredException(); }
 	m_Balance = InitialDeposit;
 	m_ISA = Isa;
 	m_InterestRate = 0.85;
 	std::string accountType = "Savings";
 	if (m_ISA) {
 		if (InitialDeposit < m_IsaRequiredDeposit) {
-			throw InitialDepositBelowRequiredException("ERROR: Initial deposit must be at least £"
-				+ Savings::Truncate2dp(m_IsaRequiredDeposit) + ".");
+			throw InitialDepositBelowRequiredException("ERROR: Initial deposit must be at least £" + Savings::Truncate2dp(m_IsaRequiredDeposit) + ".");
 		}
 		m_InterestRate = 1.15;
 		accountType = "ISA";
