@@ -3,14 +3,17 @@
 
 Savings::Savings(double InitialDeposit, bool Isa) {
 	if (InitialDeposit < 0) {
-		throw InitialDepositBelowZeroException();
+		throw InitialDepositBelowRequiredException();
 	}
 	m_Balance = InitialDeposit;
 	m_ISA = Isa;
 	m_InterestRate = 0.85;
 	std::string accountType = "Savings";
 	if (m_ISA) {
-		if (InitialDeposit < 1000) { throw InitialDepositBelowISARequiredException(); }
+		if (InitialDeposit < m_IsaRequiredDeposit) {
+			throw InitialDepositBelowRequiredException("ERROR: Initial deposit must be at least £"
+				+ std::to_string(m_IsaRequiredDeposit) + ".");
+		}
 		m_InterestRate = 1.15;
 		accountType = "ISA";
 	}
