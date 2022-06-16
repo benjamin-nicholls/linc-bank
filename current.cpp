@@ -2,10 +2,7 @@
 
 
 Current::Current(double InitialDeposit) {
-	if (InitialDeposit < 0.00) {
-		//throw std::exception{ "Initial deposit for a current account cannot be negative." };
-		throw "Initial deposit for a current account cannot be negative.";
-	}
+	if (InitialDeposit < 0.00) { throw InitialDepositBelowRequiredException(); }
 	m_Balance = InitialDeposit;
 	m_Overdraft = 0.00;
 	Transaction* t = new Transaction("Open Current Acount", m_Balance);
@@ -20,7 +17,7 @@ Current::~Current() {
 }
 
 
-bool Current::deposit(double Amount, int Ref) {
+bool Current::deposit(double &Amount, int Ref) {
 	if (Amount <= 0.00) { return false; }
 	double a = Amount - m_Overdraft;
 	if (a > 0) {
@@ -38,7 +35,7 @@ bool Current::deposit(double Amount, int Ref) {
 }
 
 
-bool Current::withdraw(double Amount, int Ref) {
+bool Current::withdraw(double &Amount, int Ref) {
 	if (Amount <= 0.00) { return false; }
 	if (m_Balance + m_OverdraftLimit - m_Overdraft < Amount) { return false; }
 	
@@ -66,15 +63,12 @@ double Current::GetBalance() const {
 
 std::string Current::Truncate2dp(double Value) const {
 	std::string value = std::to_string(Value);
-	value = value.substr(0, value.find('.')  + 3);
-	return value;
+	return value.substr(0, value.find('.')  + 3);
 }
 
 
 std::string Current::toString() const {
-	std::string a = "";
-
-	a += "Current account | Balance: £" + Current::Truncate2dp(this->GetBalance()) + "\n";
+	std::string a = "Current account | Balance: £" + Current::Truncate2dp(this->GetBalance()) + "\n";
 	for (auto entry : m_History) {
 		a += entry->toString();
     }
