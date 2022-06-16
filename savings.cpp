@@ -12,7 +12,7 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 	if (m_ISA) {
 		if (InitialDeposit < m_IsaRequiredDeposit) {
 			throw InitialDepositBelowRequiredException("ERROR: Initial deposit must be at least £"
-				+ std::to_string(m_IsaRequiredDeposit) + ".");
+				+ Savings::Truncate2dp(m_IsaRequiredDeposit) + ".");
 		}
 		m_InterestRate = 1.15;
 		accountType = "ISA";
@@ -29,7 +29,7 @@ Savings::~Savings() {
 }
 
 
-bool Savings::deposit(double Amount, int Ref) {
+bool Savings::deposit(double &Amount, int Ref) {
 	if (Amount <= 0) { return false; }
 	m_Balance += Amount;
 	std::string desc = "Deposit";
@@ -40,7 +40,7 @@ bool Savings::deposit(double Amount, int Ref) {
 }
 
 
-bool Savings::withdraw(double Amount, int Ref) {
+bool Savings::withdraw(double &Amount, int Ref) {
 	if (Amount <= 0.00) { return false; }
 	if (m_Balance - Amount < 0.00) { return false; }
 	m_Balance -= Amount;
@@ -52,7 +52,7 @@ bool Savings::withdraw(double Amount, int Ref) {
 }
 
 
-double Savings::computeInterest(int Years) const {
+double Savings::computeInterest(int &Years) const {
 	int n = 12;  // Unit time (monthly = 12).
 	double finalAmount = m_Balance * pow(1 + m_InterestRate / 100 / n, n * Years);
 	return finalAmount;
