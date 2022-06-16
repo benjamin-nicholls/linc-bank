@@ -6,10 +6,9 @@
 
 class Account {
 public:
-	Account() {};
-	~Account() {};
-	virtual bool deposit(double Amount, int Ref = 0) = 0;
-	virtual bool withdraw(double Amount, int Ref = 0) = 0;
+	virtual ~Account() {};
+	virtual bool deposit(double &Amount, int Ref = 0) = 0;
+	virtual bool withdraw(double &Amount, int Ref = 0) = 0;
 	virtual std::string toString() const = 0;
 
 protected:
