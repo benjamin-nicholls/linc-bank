@@ -7,9 +7,9 @@ class Savings: public Account, public InterestEarning {
 public:
 	Savings(double InitialDeposit = 0.00, bool Isa = false);
 	~Savings();
-	bool deposit(double Amount, int Ref = 0);
-	bool withdraw(double Amount, int Ref = 0);
-	double computeInterest(int Years) const;
+	bool deposit(double &Amount, int Ref = 0);
+	bool withdraw(double &Amount, int Ref = 0);
+	double computeInterest(int &Years) const;
 	std::string toString() const;
 
 protected:
