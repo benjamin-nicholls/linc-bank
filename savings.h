@@ -15,5 +15,6 @@ public:
 protected:
 	double m_InterestRate;
 	bool m_ISA;
+	double m_IsaRequiredDeposit = 1000.00;
 	std::string Truncate2dp(double Value) const;
 };
