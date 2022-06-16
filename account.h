@@ -22,91 +22,125 @@ protected:
 // Custom exceptions.
 
 // Account exceptions.
-struct NoAccountsCreatedException : public std::exception {
+struct NumberOfAccountsException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: You have not opened any accounts yet.";
+	NumberOfAccountsException() {}
+	NumberOfAccountsException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
-};
-
-struct NotEnoughAccountsException : public std::exception {
-public:
 	virtual const char* what() const throw() {
-		return "ERROR: You have not opened enough accounts yet.";
+		return m_What;
 	}
+private:
+	const char* m_What = "ERROR: Incorrect number of accounts.";
 };
 
 struct AccountNumberOutOfRangeException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: Account number specified out of range.";
+	AccountNumberOutOfRangeException() {}
+	AccountNumberOutOfRangeException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: Account number specified out of range.";
 };
 
-struct MaxCurrentAccountException : public std::exception {
+struct MaxAccountException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: You have opened the maximum number of current account(s).";
+	MaxAccountException() {}
+	MaxAccountException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: You have opened the maximum number of account(s).";
 };
 
-struct MaxIsaAccountException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: You have opened the maximum number of ISA saving account(s).";
-	}
-};
 
 // Number exceptions.
-struct NotIntException : public std::exception {
+struct WrongTypeException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: Value was not an integer.";
+	WrongTypeException() {}
+	WrongTypeException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: Value was not the correct type/format.";
 };
 
-struct NotCurrencyException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Value was not a currency format.";
-	}
-};
 
 // Parameters exceptions.
 struct NotEnoughParametersException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: You do not have enough parameters.";
+	NotEnoughParametersException() {}
+	NotEnoughParametersException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: You do not have enough parameters.";
 };
+
 
 // Deposit exceptions.
-struct InitialDepositBelowZeroException : public std::exception {
+struct InitialDepositBelowRequiredException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: Initial deposit must be above £0.00.";
+	InitialDepositBelowRequiredException() {}
+	InitialDepositBelowRequiredException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: Initial deposit below required amount.";
 };
 
-struct InitialDepositBelowISARequiredException : public std::exception {
-public:
-	virtual const char* what() const throw() {
-		return "ERROR: Initial deposit must be at least £1000.";
-	}
-};
 
 // Transaction exceptions.
 struct WithdrawFailException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: Could not withdraw from the account.";
+	WithdrawFailException() {}
+	WithdrawFailException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: Could not withdraw from the account.";
 };
 
-// Othet exceptions.
+
+// Other exceptions.
 struct DynamicCastUnsuccessfulException : public std::exception {
 public:
-	virtual const char* what() const throw() {
-		return "ERROR: Selected account is not a savings account.";
+	DynamicCastUnsuccessfulException() {}
+	DynamicCastUnsuccessfulException(const std::string &Message) {
+		const char * c = Message.c_str();
+		m_What = c;
 	}
+	virtual const char* what() const throw() {
+		return m_What;
+	}
+private:
+	const char* m_What = "ERROR: Dynamic cast unsuccessful. Check types.";
 };
+
