@@ -52,7 +52,7 @@ bool Savings::withdraw(double &Amount, int Ref) {
 }
 
 
-double Savings::computeInterest(int &Years) const {
+double Savings::computeInterest(int Years) const {
 	int n = 12;  // Unit time (monthly = 12).
 	double finalAmount = m_Balance * pow(1 + m_InterestRate / 100 / n, n * Years);
 	return finalAmount;
