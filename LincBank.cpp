@@ -85,12 +85,12 @@ int main() {
 				std::string accountType = "";
 
 				// Check deposit is valid.
-				if (!MainMethods::IsCurrency(parameters[2])) { throw NotCurrencyException(); }
+				if (!MainMethods::IsCurrency(parameters[2])) { throw WrongTypeException("ERROR: Value was not a currency format."); }
 				deposit = std::stod(parameters[2]);
 
 				if (parameters[1] == "1") {
 					// Only allowed one current account.
-					if (currentAccount) { throw MaxCurrentAccountException(); }
+					if (currentAccount) { throw MaxAccountException("ERROR: You have opened the maximum number of current account(s)."); }
 					accountType = "Current";
 					Account* a = new Current(deposit);
 					accounts.push_back(a);
@@ -103,7 +103,7 @@ int main() {
 					flagAccountCreated = true;
 				} else if (parameters[1] == "3") {
 					// Only allowed one ISA account.
-					if (isaAccount) { throw MaxIsaAccountException(); }
+					if (isaAccount) { throw MaxAccountException("ERROR: You have opened the maximum number of ISA account(s)."); }
 					accountType = "ISA";
 					// Optional bool argument denotes this as an ISA account.
 					Account* a = new Savings(deposit, true);
@@ -125,7 +125,7 @@ int main() {
 			} else if (command.compare("view") == 0) {
 				// Display an account according to an index (starting from 1).  
 				// Alternatively, display all accounts if no index is provided.
-				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
+				if (numberOfAccounts == 0) { throw NumberOfAccountsException("ERROR: You have not opened any accounts yet."); }
 				if (parameters.size() == 1) {
 					std::cout << MainMethods::ViewAllAccounts(accounts) << std::endl;
 				} else {
@@ -136,7 +136,7 @@ int main() {
 
 			} else if (command.compare("withdraw") == 0) {
 				// Allow user to withdraw funds from an account.
-				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
+				if (numberOfAccounts == 0) { throw NumberOfAccountsException("ERROR: You have not opened any accounts yet."); }
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				// If there is at least one account, we know activeAccount will be a correct index.
 				Account* a = accounts[activeAccount];
@@ -150,7 +150,7 @@ int main() {
 
 			} else if (command.compare("deposit") == 0) {
 				// Allow user to deposit funds into an account.  
-				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
+				if (numberOfAccounts == 0) { throw NumberOfAccountsException("ERROR: You have not opened any accounts yet."); }
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				// If there is at least one account, we know activeAccount will be a correct index.
 				Account* a = accounts[activeAccount];
@@ -163,7 +163,7 @@ int main() {
 				}
 	
 			} else if (command.compare("transfer") == 0) {
-				if (numberOfAccounts < 2) { throw NotEnoughAccountsException(); }
+				if (numberOfAccounts < 2) { throw NumberOfAccountsException("ERROR: You have not opened enough accounts yet."); }
 				if (parameters.size() < 4) { throw NotEnoughParametersException(); }
 				// Allow user to transfer funds between accounts.  
 				// i.e., a withdrawal followed by a deposit!
@@ -171,7 +171,7 @@ int main() {
 
 			} else if (command.compare("project") == 0) {
 				// Compute compound interest t years into the future.
-				if (numberOfAccounts == 0) { throw NoAccountsCreatedException(); }
+				if (numberOfAccounts == 0) { throw NumberOfAccountsException("ERROR: You have not opened any accounts yet."); }
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				double interest = MainMethods::Project(accounts[activeAccount], parameters[1]);
 				std::cout << "Projected balance: £" << interest << std::endl;
@@ -182,28 +182,20 @@ int main() {
 			//}
 
 		// Accounts exceptions.
-		} catch (const NoAccountsCreatedException &e) {
-			std::cout << e.what() << std::endl;
-		} catch (const NotEnoughAccountsException &e) {
+		} catch (const NumberOfAccountsException &e) {
 			std::cout << e.what() << std::endl;
 		} catch (const AccountNumberOutOfRangeException &e) {
 			std::cout << e.what() << std::endl;
-		} catch (const MaxCurrentAccountException &e) {
-			std::cout << e.what() << std::endl;
-		} catch (const MaxIsaAccountException &e) {
+		} catch (const MaxAccountException &e) {
 			std::cout << e.what() << std::endl;
 		// Number exceptions.
-		} catch (const NotCurrencyException &e) {
-			std::cout << e.what() << std::endl;
-		} catch (const NotIntException &e) {
+		} catch (const WrongTypeException &e) {
 			std::cout << e.what() << std::endl;
 		// Parameter exceptions.
 		} catch (const NotEnoughParametersException &e) {
 			std::cout << e.what() << std::endl;
 		// Deposit exceptions.
-		} catch (const InitialDepositBelowISARequiredException &e) {
-			std::cout << e.what() << std::endl;
-		} catch (const InitialDepositBelowZeroException &e) {
+		} catch (const InitialDepositBelowRequiredException &e) {
 			std::cout << e.what() << std::endl;
 		// Transaction exceptions.
 		} catch (const WithdrawFailException &e) {
