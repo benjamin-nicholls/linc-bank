@@ -72,6 +72,7 @@ TreeNode* BST::Search(TreeNode* &p_Node, double Key) {
 
 TreeNode* BST::Insert(TreeNode* &p_Node, Transaction* p_Transaction) {
     if (p_Node == nullptr) { p_Node = new TreeNode(p_Transaction); return p_Node; }
+    if (*p_Node == *p_Transaction) { p_Node->m_TransactionOverflow.push_back(p_Transaction); }
     if (*p_Node > *p_Transaction) { BST::Insert(p_Node->m_p_Left, p_Transaction); }
     if (*p_Node < *p_Transaction) { BST::Insert(p_Node->m_p_Right, p_Transaction); }
     return p_Node;
