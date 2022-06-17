@@ -1,6 +1,4 @@
 #include "bst.h"
-#include <iostream> //remove
-
 
 TreeNode::TreeNode() {
     m_p_Transaction = nullptr;
@@ -15,13 +13,14 @@ TreeNode::TreeNode(Transaction* p_Transaction) {
     m_p_Right = nullptr;
 }
 
+
 TreeNode::~TreeNode() {
-    delete m_p_Transaction;
     delete m_p_Left;
     delete m_p_Right;
-    for (auto t : m_TransactionOverflow) {
-        delete t;
-    } 
+    for (auto transaction : m_TransactionOverflow) {
+       delete transaction;
+    }
+    delete m_p_Transaction;
 }
 
 
@@ -89,9 +88,11 @@ TreeNode* BST::Insert(TreeNode* &p_Node, Transaction* p_Transaction) {
 
 
 // Not used functionally within the bank program.
+/*
 void BST::PrintTreeInOrder(TreeNode* p_Node) {
     if (p_Node == nullptr) { return; }
     PrintTreeInOrder(p_Node->m_p_Left);
     std::cout << p_Node->m_p_Transaction->toString();  // No endl needed.
     PrintTreeInOrder(p_Node->m_p_Right);
 }
+*/

@@ -1,5 +1,4 @@
 #include "current.h"
-#include <iostream> //remove
 
 
 Current::Current(double InitialDeposit) {
@@ -13,10 +12,10 @@ Current::Current(double InitialDeposit) {
 
 
 Current::~Current() {
-	for (auto transaction : m_History) {
-		delete transaction;
-	}
-	delete m_p_HistoryTree;
+	if (m_p_HistoryTree != nullptr) { delete m_p_HistoryTree; }
+	// Same transaction objects stored in binary tree as m_History vector.
+	// Only have to clear the vector.
+	m_History.clear();
 }
 
 
