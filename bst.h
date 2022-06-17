@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <string>
+#include <vector>
 #include "transaction.h"
 
 
@@ -11,6 +12,7 @@ public:
 	~TreeNode() {};
 	std::string toString() const;
     Transaction* m_p_Transaction;
+    std::vector <Transaction*> m_TransactionOverflow; 
     TreeNode *m_p_Left;
     TreeNode *m_p_Right;
     
