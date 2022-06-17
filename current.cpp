@@ -1,4 +1,5 @@
 #include "current.h"
+#include <iostream> //remove
 
 
 Current::Current(double InitialDeposit) {
@@ -7,6 +8,9 @@ Current::Current(double InitialDeposit) {
 	m_Overdraft = 0.00;
 	Transaction* t = new Transaction("Open Current Acount", m_Balance);
 	m_History.push_back(t);
+	m_p_HistoryTree = new TreeNode(t);
+	std::cout << "in current account constructor" << std::endl;
+	std::cout << m_p_HistoryTree->m_p_Transaction->toString() << std::endl;
 }
 
 
@@ -30,8 +34,8 @@ bool Current::deposit(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
+	BST::Insert(m_p_HistoryTree, t);
 	return true;
-
 }
 
 
@@ -52,6 +56,7 @@ bool Current::withdraw(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer to account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
+	BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
@@ -61,17 +66,10 @@ double Current::GetBalance() const {
 }
 
 
-std::string Current::Truncate2dp(double Value) const {
-	std::string value = std::to_string(Value);
-	return value.substr(0, value.find('.')  + 3);
-}
-
-
 std::string Current::toString() const {
-	std::string a = "Current account | Balance: £" + Current::Truncate2dp(this->GetBalance()) + "\n";
+	std::string a = "Current account | Balance: £" + Truncate::Truncate2dp(this->GetBalance()) + "\n";
 	for (auto entry : m_History) {
 		a += entry->toString();
     }
 	return a;                                                           
 }
-

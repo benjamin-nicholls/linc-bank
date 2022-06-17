@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include "transaction.h"
+#include "bst.h"
+#include "truncate.h"
 
 
 class Account {
@@ -10,6 +12,7 @@ public:
 	virtual bool deposit(double &Amount, int Ref = 0) = 0;
 	virtual bool withdraw(double &Amount, int Ref = 0) = 0;
 	virtual std::string toString() const = 0;
+	TreeNode* m_p_HistoryTree;
 
 protected:
 	double m_Balance;
@@ -35,6 +38,7 @@ private:
 	const char* m_What = "ERROR: Incorrect number of accounts.";
 };
 
+
 struct AccountNumberOutOfRangeException : public std::exception {
 public:
 	AccountNumberOutOfRangeException() {}
@@ -48,6 +52,7 @@ public:
 private:
 	const char* m_What = "ERROR: Account number specified out of range.";
 };
+
 
 struct MaxAccountException : public std::exception {
 public:
@@ -142,4 +147,3 @@ public:
 private:
 	const char* m_What = "ERROR: Dynamic cast unsuccessful. Check types.";
 };
-

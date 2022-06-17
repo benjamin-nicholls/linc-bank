@@ -38,12 +38,6 @@ bool MainMethods::IsInt(std::string &Str) {
 }
 
 
-std::string MainMethods::Truncate2dp(double &Value) {
-    std::string value = std::to_string(Value);
-    return value.substr(0, value.find('.')  + 3);
-}
-
-
 std::string MainMethods::ViewAllAccounts (std::vector<Account*> &Accounts) {
     std::string str = "";
     for (auto a : Accounts) {
@@ -110,3 +104,11 @@ double MainMethods::Project(Account* &A, std::string &Years) {
     return s->computeInterest(std::stoi(Years));
 }
 
+std::string MainMethods::Search(Account* &A, std::string &Amount) {
+    if (!MainMethods::IsCurrency(Amount)) { throw WrongTypeException("ERROR: Value was not a currency format."); }
+    double amount = std::stod(Amount);
+    std::cout << "searching for " << std::to_string(amount) << std::endl;
+    TreeNode* node = BST::Search(A->m_p_HistoryTree, amount);
+    if (node == nullptr) {return "No transaction found."; }
+    return node->m_p_Transaction->toString();
+}

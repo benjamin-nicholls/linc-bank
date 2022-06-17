@@ -1,6 +1,7 @@
 #include "savings.h"
 #include <cmath>  // Exponent.
 
+
 Savings::Savings(double InitialDeposit, bool Isa) {
 	if (InitialDeposit < 0) { throw InitialDepositBelowRequiredException(); }
 	m_Balance = InitialDeposit;
@@ -9,13 +10,14 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 	std::string accountType = "Savings";
 	if (m_ISA) {
 		if (InitialDeposit < m_IsaRequiredDeposit) {
-			throw InitialDepositBelowRequiredException("ERROR: Initial deposit must be at least £" + Savings::Truncate2dp(m_IsaRequiredDeposit) + ".");
+			throw InitialDepositBelowRequiredException("ERROR: Initial deposit must be at least £" + Truncate::Truncate2dp(m_IsaRequiredDeposit) + ".");
 		}
 		m_InterestRate = 1.15;
 		accountType = "ISA";
 	}
 	Transaction* t = new Transaction("Open " + accountType + " Account", m_Balance);
 	m_History.push_back(t);
+	BST::Insert(m_p_HistoryTree, t);
 }	
 
 
@@ -33,6 +35,7 @@ bool Savings::deposit(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
+	BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
@@ -45,6 +48,7 @@ bool Savings::withdraw(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer to account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
+	BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
@@ -55,16 +59,10 @@ double Savings::computeInterest(int Years) const {
 }
 
 
-std::string Savings::Truncate2dp(double Value) const {
-	std::string value = std::to_string(Value);
-	return value.substr(0, value.find('.')  + 3);
-}
-
-
 std::string Savings::toString() const {
 	std::string str = "Savings";
 	if (m_ISA) { str = "ISA"; }
-	str += " account | Balance: £" + Savings::Truncate2dp(m_Balance) + "\n";
+	str += " account | Balance: £" + Truncate::Truncate2dp(m_Balance) + "\n";
 	for (auto entry : m_History) {
 		str += entry->toString();
     }
