@@ -9,4 +9,4 @@ set(CMAKE_BUILD_TYPE Debug)
 
 project(test)
 
-add_executable (test LincBank.cpp transaction.cpp savings.cpp current.cpp mainmethods.cpp)
+add_executable (test LincBank.cpp transaction.cpp savings.cpp current.cpp mainmethods.cpp bst.cpp)
