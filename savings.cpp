@@ -25,6 +25,7 @@ Savings::~Savings() {
 	for (auto transaction : m_History) {
 		delete transaction;
 	}
+		delete m_p_HistoryTree;
 }
 
 
