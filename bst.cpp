@@ -15,6 +15,15 @@ TreeNode::TreeNode(Transaction* p_Transaction) {
     m_p_Right = nullptr;
 }
 
+TreeNode::~TreeNode() {
+    delete m_p_Transaction;
+    delete m_p_Left;
+    delete m_p_Right;
+    for (auto t : m_TransactionOverflow) {
+        delete t;
+    } 
+}
+
 
 std::string TreeNode::toString() const {
 	return m_p_Transaction->toString();
