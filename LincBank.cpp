@@ -23,6 +23,7 @@ Good luck!
 //#include "savings.h"
 #include "mainmethods.h"
 
+
 // I try to be as explicit as possible for where a method originates from (e.g. MainMethods or std).
 int main() {
 	std::vector <std::string> parameters;
@@ -90,7 +91,7 @@ int main() {
 
 				if (parameters[1] == "1") {
 					// Only allowed one current account.
-					if (currentAccount) { throw MaxAccountException("ERROR: You have opened the maximum number of current account(s)."); }
+					if (currentAccount) { throw MaxAccountException("ERROR: Maximum number of current account(s) opened."); }
 					accountType = "Current";
 					Account* a = new Current(deposit);
 					accounts.push_back(a);
@@ -103,7 +104,7 @@ int main() {
 					flagAccountCreated = true;
 				} else if (parameters[1] == "3") {
 					// Only allowed one ISA account.
-					if (isaAccount) { throw MaxAccountException("ERROR: You have opened the maximum number of ISA account(s)."); }
+					if (isaAccount) { throw MaxAccountException("ERROR: Maximum number of ISA account(s) opened."); }
 					accountType = "ISA";
 					// Optional bool argument denotes this as an ISA account.
 					Account* a = new Savings(deposit, true);
@@ -161,6 +162,7 @@ int main() {
 					std::cout << "Deposited £" << parameters[1] << " into account " << activeAccount + 1 << "." << std::endl;
 					std::cout << a->toString() << std::endl;
 				}
+				BST::PrintTreeInOrder(a->m_p_HistoryTree);
 	
 			} else if (command.compare("transfer") == 0) {
 				if (numberOfAccounts < 2) { throw NumberOfAccountsException("ERROR: You have not opened enough accounts yet."); }
@@ -175,11 +177,15 @@ int main() {
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				double interest = MainMethods::Project(accounts[activeAccount], parameters[1]);
 				std::cout << "Projected balance: £" << interest << std::endl;
-			} //else if (command.compare("search"))
-			//{
+			
+			} else if (command.compare("search") == 0) {
 			//	Allow users to search their account history for a transaction.  
 			//  (this is a stretch task)
-			//}
+				if (numberOfAccounts == 0) { throw NumberOfAccountsException("ERROR: You have not opened any accounts yet."); }
+				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
+				std::cout << accounts[activeAccount] << " :: " << parameters[1] << std::endl;
+				std::cout << MainMethods::Search(accounts[activeAccount], parameters[1]) << std::endl;
+			}
 
 		// Accounts exceptions.
 		} catch (const NumberOfAccountsException &e) {
