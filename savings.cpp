@@ -1,5 +1,5 @@
-#include "savings.h"
 #include <cmath>  // Exponent.
+#include "savings.h"
 
 
 Savings::Savings(double InitialDeposit, bool Isa) {
@@ -17,7 +17,7 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 	}
 	Transaction* t = new Transaction("Open " + accountType + " Account", m_Balance);
 	m_History.push_back(t);
-	BST::Insert(m_p_HistoryTree, t);
+	m_p_HistoryTree = new TreeNode(t);
 }	
 
 
