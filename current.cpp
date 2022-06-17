@@ -6,11 +6,9 @@ Current::Current(double InitialDeposit) {
 	if (InitialDeposit < 0.00) { throw InitialDepositBelowRequiredException(); }
 	m_Balance = InitialDeposit;
 	m_Overdraft = 0.00;
-	Transaction* t = new Transaction("Open Current Acount", m_Balance);
+	Transaction* t = new Transaction("Open Current Account", m_Balance);
 	m_History.push_back(t);
 	m_p_HistoryTree = new TreeNode(t);
-	std::cout << "in current account constructor" << std::endl;
-	std::cout << m_p_HistoryTree->m_p_Transaction->toString() << std::endl;
 }
 
 
