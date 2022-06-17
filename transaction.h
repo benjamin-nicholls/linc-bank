@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <chrono>
-#include "truncate.h"
 
 
 class Transaction {
