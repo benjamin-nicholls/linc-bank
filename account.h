@@ -65,7 +65,7 @@ public:
 		return m_What;
 	}
 private:
-	const char* m_What = "ERROR: You have opened the maximum number of account(s).";
+	const char* m_What = "ERROR: Maximum number of account(s) opened.";
 };
 
 
