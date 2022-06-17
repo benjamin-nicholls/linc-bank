@@ -23,7 +23,6 @@ Good luck!
 //#include "savings.h"
 #include "mainmethods.h"
 
-
 // I try to be as explicit as possible for where a method originates from (e.g. MainMethods or std).
 int main() {
 	std::vector <std::string> parameters;
@@ -162,7 +161,6 @@ int main() {
 					std::cout << "Deposited £" << parameters[1] << " into account " << activeAccount + 1 << "." << std::endl;
 					std::cout << a->toString() << std::endl;
 				}
-				BST::PrintTreeInOrder(a->m_p_HistoryTree);
 	
 			} else if (command.compare("transfer") == 0) {
 				if (numberOfAccounts < 2) { throw NumberOfAccountsException("ERROR: You have not opened enough accounts yet."); }
@@ -183,7 +181,6 @@ int main() {
 			//  (this is a stretch task)
 				if (numberOfAccounts == 0) { throw NumberOfAccountsException("ERROR: You have not opened any accounts yet."); }
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
-				std::cout << accounts[activeAccount] << " :: " << parameters[1] << std::endl;
 				std::cout << MainMethods::Search(accounts[activeAccount], parameters[1]) << std::endl;
 			}
 
