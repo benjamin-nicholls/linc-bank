@@ -9,7 +9,7 @@ struct TreeNode {
 public:
     TreeNode();
 	TreeNode(Transaction* p_Transaction);
-	~TreeNode() {};
+	~TreeNode();
 	std::string toString() const;
     Transaction* m_p_Transaction;
     std::vector <Transaction*> m_TransactionOverflow; 
