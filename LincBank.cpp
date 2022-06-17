@@ -85,6 +85,7 @@ int main() {
 				std::string accountType = "";
 
 				// Check deposit is valid.
+				if (parameters.size() < 3) { throw NotEnoughParametersException(); }
 				if (!MainMethods::IsCurrency(parameters[2])) { throw WrongTypeException("ERROR: Value was not a currency format."); }
 				deposit = std::stod(parameters[2]);
 
