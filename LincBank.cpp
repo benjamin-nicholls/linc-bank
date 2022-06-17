@@ -19,8 +19,6 @@ Good luck!
 #include <vector>
 #include <string>
 
-//#include "current.h"
-//#include "savings.h"
 #include "mainmethods.h"
 
 // I try to be as explicit as possible for where a method originates from (e.g. MainMethods or std).
@@ -61,6 +59,7 @@ int main() {
 			p_token = strtok(NULL, " ");
 		}
 		delete[] p_cstr;
+		delete p_token;
 
 		// Define all commands as per the brief.  
 		std::string command = parameters[0];
