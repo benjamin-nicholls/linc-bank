@@ -7,6 +7,6 @@ set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
 set(CMAKE_BUILD_TYPE Debug)
 
-project(test)
+project(lincbank)
 
-add_executable (test LincBank.cpp transaction.cpp savings.cpp current.cpp mainmethods.cpp bst.cpp)
+add_executable (lincbank LincBank.cpp transaction.cpp savings.cpp current.cpp mainmethods.cpp bst.cpp)
