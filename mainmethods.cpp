@@ -19,9 +19,7 @@ void MainMethods::PrintMenuOptions() {
 bool MainMethods::IsCurrency(std::string &Str) {
     for (auto c : Str) {
         if (!std::isdigit(c)) {
-            if (c != '.') {
-                return false;
-            }
+            if (c != '.') { return false; }
         }
     }
     return true;
@@ -30,9 +28,7 @@ bool MainMethods::IsCurrency(std::string &Str) {
 
 bool MainMethods::IsInt(std::string &Str) {
     for (auto c : Str) {
-        if (!std::isdigit(c)) {
-            return false;
-        }
+        if (!std::isdigit(c)) { return false; }
     }
     return true;
 }
@@ -40,9 +36,7 @@ bool MainMethods::IsInt(std::string &Str) {
 
 std::string MainMethods::ViewAllAccounts (std::vector<Account*> &Accounts) {
     std::string str = "";
-    for (auto a : Accounts) {
-        str += a->toString();
-    }
+    for (auto a : Accounts) { str += a->toString(); }
     return str;
 }
 
@@ -108,7 +102,7 @@ std::string MainMethods::Search(Account* &A, std::string &Amount) {
     if (!MainMethods::IsCurrency(Amount)) { throw WrongTypeException("ERROR: Value was not a currency format."); }
     double amount = std::stod(Amount);
     TreeNode* node = BST::Search(A->m_p_HistoryTree, amount);
-    if (node == nullptr) {return "No transaction found."; }
+    if (node == nullptr) { return "No transaction found."; }
     std::string str = node->m_p_Transaction->toString();
     for (auto transaction : node->m_TransactionOverflow) {
         str += transaction->toString();

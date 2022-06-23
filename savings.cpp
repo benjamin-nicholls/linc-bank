@@ -64,8 +64,6 @@ std::string Savings::toString() const {
 	std::string str = "Savings";
 	if (m_ISA) { str = "ISA"; }
 	str += " account | Balance: £" + Truncate::Truncate2dp(m_Balance) + "\n";
-	for (auto entry : m_History) {
-		str += entry->toString();
-    }
+	for (auto entry : m_History) { str += entry->toString(); }
 	return str;   
 }

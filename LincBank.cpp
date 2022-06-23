@@ -213,9 +213,7 @@ int main() {
 	}
 
 	// Clean up. 
-	for (auto a : accounts) {
-		delete a;
-	}
+	for (auto a : accounts) { delete a; }
 	std::cout << "Press any key to quit...";
 	std::getchar();
 }

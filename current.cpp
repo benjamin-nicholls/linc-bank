@@ -66,8 +66,6 @@ double Current::GetBalance() const {
 
 std::string Current::toString() const {
 	std::string a = "Current account | Balance: £" + Truncate::Truncate2dp(this->GetBalance()) + "\n";
-	for (auto entry : m_History) {
-		a += entry->toString();
-    }
+	for (auto entry : m_History) { a += entry->toString(); }
 	return a;                                                           
 }

@@ -17,9 +17,7 @@ TreeNode::TreeNode(Transaction* p_Transaction) {
 TreeNode::~TreeNode() {
     delete m_p_Left;
     delete m_p_Right;
-    for (auto transaction : m_TransactionOverflow) {
-       delete transaction;
-    }
+    for (auto transaction : m_TransactionOverflow) { delete transaction; }
     delete m_p_Transaction;
 }
 
