@@ -27,9 +27,12 @@ int main() {
 	std::string userCommand;
 	// You may also want to store a collection of opened accounts here.  
 	std::vector<Account*> accounts;  // Store pointers.
+	// Used for numbering accounts.
 	int numberOfAccounts = 0;
+	// Used to check if an account type is open.
 	bool currentAccount = false;
 	bool isaAccount = false;
+	// Used for options where an account is not specified (e.g. withdraw/deposit).
 	int activeAccount = 0;
 
 	std::cout << "~~~ Welcome to LincBank! ~~~" << std::endl;
@@ -37,11 +40,9 @@ int main() {
 	std::cout << "Press any key to continue...";
 	std::cin.ignore();
  
-	int count = 0;
 	while (userCommand != "exit") {
-		count++;
-
-		parameters.clear();  // Clear ready for next command.  
+		// Clear ready for next command.  
+		parameters.clear();  
 		userCommand.clear();
 
 		std::cout << std::endl << ">>> ";
@@ -64,6 +65,7 @@ int main() {
 		// Define all commands as per the brief.  
 		std::string command = parameters[0];
 
+		
 		if (!command.empty()) {
 			std::string command = " ";
 		}
