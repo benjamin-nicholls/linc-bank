@@ -69,9 +69,8 @@ bool TreeNode::operator ==(double const Key) {
 // BST
 TreeNode* BST::Search(TreeNode* &p_Node, double Key) {
     if (p_Node == nullptr) { return nullptr; }
-    if (*p_Node == Key) { return p_Node; }  // Need to check for ALL instances of this value.
+    if (*p_Node == Key) { return p_Node; }
     if (*p_Node > Key) { return Search(p_Node->m_p_Left, Key); }
-    //if (*p_Node < Key) {
     return Search(p_Node->m_p_Right, Key);
 }
 
@@ -110,8 +109,8 @@ TreeNode* BST::rebalance(TreeNode* &p_Node) {
     } else if (leftHeight - rightHeight < -1) {
         p_Node = BST::rotateLeft(p_Node);
     }
-    rebalance(p_Node->m_p_Left);
-    rebalance(p_Node->m_p_Right);
+    BST::rebalance(p_Node->m_p_Left);
+    BST::rebalance(p_Node->m_p_Right);
     return p_Node;
 }
 
