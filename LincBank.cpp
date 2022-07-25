@@ -26,7 +26,8 @@ int main() {
 	std::vector <std::string> parameters;
 	std::string userCommand;
 	// You may also want to store a collection of opened accounts here.  
-	std::vector<Account*> accounts;  // Store pointers.
+	// Store pointers.
+	std::vector<Account*> accounts;  
 	// Used for numbering accounts.
 	int numberOfAccounts = 0;
 	// Used to check if an account type is open.
@@ -64,14 +65,12 @@ int main() {
 
 		// Define all commands as per the brief.  
 		std::string command = parameters[0];
-
-		
 		if (!command.empty()) {
 			std::string command = " ";
 		}
 
-
 		auto CalculateActiveAccountLambda = [=](int integer){ return integer - 1; };
+
 		// Catch all errors in try within main loop.
 		// All exceptions go to the end of the loop, meaning no issues.
 		// All exceptions are handled in the same area for ease of maintenance.
@@ -98,6 +97,7 @@ int main() {
 					accountType = "Current";
 					Account* a = new Current(deposit);
 					accounts.push_back(a);
+					// Bool could be made into an int if more than one current account was allowed to be opened.
 					currentAccount = true;
 					flagAccountCreated = true;
 				} else if (parameters[1] == "2") {
@@ -144,7 +144,6 @@ int main() {
 				if (parameters.size() == 1) { throw NotEnoughParametersException(); }
 				// If there is at least one account, we know activeAccount will be a correct index.
 				Account* a = accounts[activeAccount];
-
 				if (!MainMethods::Withdraw(a, parameters[1])) {
 					std::cout << "Could not withdraw £" << parameters[1] << " from account " << activeAccount + 1 << "." << std::endl;
 				} else {
