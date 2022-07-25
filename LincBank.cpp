@@ -70,6 +70,8 @@ int main() {
 			std::string command = " ";
 		}
 
+
+		auto CalculateActiveAccountLambda = [=](int integer){ return integer - 1; };
 		// Catch all errors in try within main loop.
 		// All exceptions go to the end of the loop, meaning no issues.
 		// All exceptions are handled in the same area for ease of maintenance.
@@ -120,7 +122,7 @@ int main() {
 				if (flagAccountCreated) {
 					numberOfAccounts++;
 					// Update active account. Used for withdrawing and depositing.
-					activeAccount = numberOfAccounts - 1;
+					activeAccount = CalculateActiveAccountLambda(numberOfAccounts);
 					std::cout << accountType << " Account number '" << accounts.size() << "' created." << std::endl;
 				}
 
@@ -133,7 +135,7 @@ int main() {
 				} else {
 					std::cout << MainMethods::ViewSingleAccount(accounts, parameters[1], numberOfAccounts) << std::endl;
 					std::string p = parameters[1];
-					activeAccount = std::stoi(p) - 1;
+					activeAccount = CalculateActiveAccountLambda(std::stoi(p));
 				}
 
 			} else if (command.compare("withdraw") == 0) {
