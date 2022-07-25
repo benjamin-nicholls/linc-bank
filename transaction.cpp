@@ -1,6 +1,6 @@
-#include <cmath>
 #include "transaction.h"
 #include "truncate.h"
+#include <chrono>  // Time of transaction.
 
 
 Transaction::Transaction(std::string Type, double Value) {
