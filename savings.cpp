@@ -1,5 +1,6 @@
-#include <cmath>  // Exponent.
 #include "savings.h"
+#include <cmath>  // Exponent.
+
 
 
 Savings::Savings(double InitialDeposit, bool Isa) {
