@@ -78,6 +78,9 @@ int main() {
 			if (command.compare("options") == 0) {
 				// Display the various commands to the user.  
 				MainMethods::PrintMenuOptions();
+				
+			} else if (command.compare("help") == 0) {
+				MainMethods::PrintMenuOptions();
 
 			} else if (command.compare("open") == 0) {
 				// Allow a user to open an account.  
