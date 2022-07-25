@@ -11,15 +11,22 @@ void MainMethods::PrintMenuOptions() {
     std::cout << "\tdeposit sum" << "\t\t\t" << "deposit funds into most recently viewed account" << std::endl;
     std::cout << "\ttransfer src dest sum" << "\t\t" << "transfer funds between accounts" << std::endl;
     std::cout << "\tproject years" << "\t\t\t" << "project balance forward in time" << std::endl;
+    std::cout << "\tsearch sum" << "\t\t\t" << "search for a specific transaction value" << std::endl;
     std::cout << "\texit" << "\t\t\t\t" << "close this application" << std::endl;
     std::cout << "\toptions" << "\t\t\t\t" << "view these options again" << std::endl;
 }
 
 
 bool MainMethods::IsCurrency(std::string &Str) {
+    bool decimalPoint = false;
     for (auto c : Str) {
         if (!std::isdigit(c)) {
-            if (c != '.') { return false; }
+            if (c == '.') {
+                if (decimalPoint) { return false; }
+                decimalPoint = true;
+            } else {
+                return false;
+            }
         }
     }
     return true;
@@ -97,6 +104,7 @@ double MainMethods::Project(Account* &A, std::string &Years) {
     if (s == nullptr) { throw DynamicCastUnsuccessfulException("ERROR: Selected account is not a savings account."); }
     return s->computeInterest(std::stoi(Years));
 }
+
 
 std::string MainMethods::Search(Account* &A, std::string &Amount) {
     if (!MainMethods::IsCurrency(Amount)) { throw WrongTypeException("ERROR: Value was not a currency format."); }
