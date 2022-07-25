@@ -9,9 +9,9 @@ public:
 	bool deposit(double &Amount, int Ref = 0);
 	bool withdraw(double &Amount, int Ref = 0);
 	std::string toString() const;
-
+protected:
+	double getBalance() const;
 protected:
 	double const m_OverdraftLimit = 500.00;
 	double m_Overdraft;
-	double GetBalance() const;
 };
