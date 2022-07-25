@@ -32,7 +32,7 @@ bool Current::deposit(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
-	BST::Insert(m_p_HistoryTree, t);
+	m_p_HistoryTree = BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
@@ -54,18 +54,18 @@ bool Current::withdraw(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer to account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
-	BST::Insert(m_p_HistoryTree, t);
+	m_p_HistoryTree = BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
 
-double Current::GetBalance() const {
+double Current::getBalance() const {
 	return m_Balance - m_Overdraft;
 }
 
 
 std::string Current::toString() const {
-	std::string a = "Current account | Balance: £" + Truncate::Truncate2dp(this->GetBalance()) + "\n";
+	std::string a = "Current account | Balance: £" + Truncate::Truncate2dp(this->getBalance()) + "\n";
 	for (auto entry : m_History) { a += entry->toString(); }
 	return a;                                                           
 }
