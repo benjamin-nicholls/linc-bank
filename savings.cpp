@@ -37,7 +37,7 @@ bool Savings::deposit(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
-	BST::Insert(m_p_HistoryTree, t);
+	m_p_HistoryTree = BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
@@ -50,7 +50,7 @@ bool Savings::withdraw(double &Amount, int Ref) {
 	if (Ref != 0) { desc = "Transfer to account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
-	BST::Insert(m_p_HistoryTree, t);
+	m_p_HistoryTree = BST::Insert(m_p_HistoryTree, t);
 	return true;
 }
 
