@@ -18,13 +18,19 @@
     <ClCompile Include="LinkBank.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="savings.cpp">
+    <ClCompile Include="transaction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="current.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="historyinfo.cpp">
+    <ClCompile Include="savings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmethods.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bst.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +38,19 @@
     <ClInclude Include="account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bst.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="current.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="exceptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="interestearning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mainmethods.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="savings.h">
@@ -44,7 +59,7 @@
     <ClInclude Include="transaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="historyinfo.h">
+    <ClInclude Include="truncate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

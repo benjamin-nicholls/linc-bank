@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "transaction.h"
 #include "truncate.h"
 #include <chrono>  // Time of transaction.

@@ -139,18 +139,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bst.cpp" />
     <ClCompile Include="current.cpp" />
-    <ClCompile Include="historyinfo.cpp" />
-    <ClCompile Include="LinkBank.cpp" />
+    <ClCompile Include="LincBank.cpp" />
+    <ClCompile Include="mainmethods.cpp" />
     <ClCompile Include="savings.cpp" />
+    <ClCompile Include="transaction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="account.h" />
+    <ClInclude Include="bst.h" />
     <ClInclude Include="current.h" />
-    <ClInclude Include="historyinfo.h" />
+    <ClInclude Include="exceptions.h" />
     <ClInclude Include="interestearning.h" />
+    <ClInclude Include="mainmethods.h" />
     <ClInclude Include="savings.h" />
     <ClInclude Include="transaction.h" />
+    <ClInclude Include="truncate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
