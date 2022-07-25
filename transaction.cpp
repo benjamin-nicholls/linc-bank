@@ -6,7 +6,7 @@
 Transaction::Transaction(std::string Type, double Value) {
 	auto nowRaw = std::chrono::system_clock::now();
 	std::time_t nowTime = std::chrono::system_clock::to_time_t(nowRaw);
-	m_Currency = "£";
+	m_Currency = "£";  // Possibility to change this if further developed.
 	m_Type = Type;
 	m_Value = Value;
 	m_Time = nowTime;
