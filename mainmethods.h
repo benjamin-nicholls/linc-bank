@@ -1,9 +1,8 @@
 #pragma once
-#include <string>
-#include <vector>
 #include "current.h"
 #include "savings.h"
 #include "truncate.h"
+#include <string>
 
 
 class MainMethods {
