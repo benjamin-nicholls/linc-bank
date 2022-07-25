@@ -1,6 +1,6 @@
-#include <iostream>
 #include "mainmethods.h"
-
+#include <iostream>
+#include <vector>
 
 // Shows all menu options to the user.
 void MainMethods::PrintMenuOptions() {
