@@ -18,6 +18,8 @@ void MainMethods::PrintMenuOptions() {
 
 
 bool MainMethods::IsCurrency(std::string &Str) {
+    // Allows one decimal point within a group of numbers.
+    // Any non-number or over one decimal point returns false.
     bool decimalPoint = false;
     for (auto c : Str) {
         if (!std::isdigit(c)) {
@@ -33,6 +35,7 @@ bool MainMethods::IsCurrency(std::string &Str) {
 }
 
 
+// Ensures all characters are numbers.
 bool MainMethods::IsInt(std::string &Str) {
     for (auto c : Str) {
         if (!std::isdigit(c)) { return false; }
@@ -109,8 +112,10 @@ double MainMethods::Project(Account* &A, std::string &Years) {
 std::string MainMethods::Search(Account* &A, std::string &Amount) {
     if (!MainMethods::IsCurrency(Amount)) { throw WrongTypeException("ERROR: Value was not a currency format."); }
     double amount = std::stod(Amount);
+    // Recursively search binary search tree for given amount.
     TreeNode* node = BST::Search(A->m_p_HistoryTree, amount);
     if (node == nullptr) { return "No transaction found."; }
+    // Prepare return string. Possibility for multiple transactions to be stored at the same node.
     std::string str = node->m_p_Transaction->toString();
     for (auto transaction : node->m_TransactionOverflow) {
         str += transaction->toString();

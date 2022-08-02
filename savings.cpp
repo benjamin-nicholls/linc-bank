@@ -4,10 +4,13 @@
 
 
 Savings::Savings(double InitialDeposit, bool Isa) {
+	// Guarding.
 	if (InitialDeposit < 0) { throw InitialDepositBelowRequiredException(); }
+	// Set initial values.
 	m_Balance = InitialDeposit;
 	m_ISA = Isa;
 	m_InterestRate = 0.85;
+	// Check for ISA requirements and set values accordingly.
 	std::string accountType = "Savings";
 	if (m_ISA) {
 		if (InitialDeposit < m_IsaRequiredDeposit) {
@@ -16,7 +19,9 @@ Savings::Savings(double InitialDeposit, bool Isa) {
 		m_InterestRate = 1.15;
 		accountType = "ISA";
 	}
+	// Create transaction object.
 	Transaction* t = new Transaction("Open " + accountType + " Account", m_Balance);
+	// Store pointer to transaction twice. Once for chronological printing and once for value searching.
 	m_History.push_back(t);
 	m_p_HistoryTree = new TreeNode(t);
 }	
@@ -31,9 +36,11 @@ Savings::~Savings() {
 
 
 bool Savings::deposit(double &Amount, int Ref) {
+	// Guarding.
 	if (Amount <= 0) { return false; }
 	m_Balance += Amount;
 	std::string desc = "Deposit";
+	// Set reference, if applicable.
 	if (Ref != 0) { desc = "Transfer from account " + std::to_string(Ref); }
 	Transaction* t = new Transaction(desc, Amount);
 	m_History.push_back(t);
