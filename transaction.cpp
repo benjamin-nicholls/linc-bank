@@ -7,7 +7,8 @@
 Transaction::Transaction(std::string Type, double Value) {
 	auto nowRaw = std::chrono::system_clock::now();
 	std::time_t nowTime = std::chrono::system_clock::to_time_t(nowRaw);
-	m_Currency = "£";  // Possibility to change this if further developed.
+    // Possibility to change currency if this were to be developed further .
+	m_Currency = "GBP";  
 	m_Type = Type;
 	m_Value = Value;
 	m_Time = nowTime;
@@ -19,6 +20,7 @@ std::string Transaction::toString() const {
 }
 
 
+// Operator overloading to allow transactions to be compared to one another or compared to a transaction value.
 bool Transaction::operator <(Transaction const &obj) {
     if (m_Value < obj.m_Value) { return true; }
     return false;
